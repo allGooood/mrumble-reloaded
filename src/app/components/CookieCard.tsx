@@ -1,22 +1,15 @@
 import Image from 'next/image';
 import React from 'react';
-import { Roboto_Condensed } from "next/font/google";
-import { Rubik } from "next/font/google";
-
-
-const font = Rubik({
-    subsets: ['latin']
-})
 
 function CookieCard() {
     return (
-        <div className={`${font.className} 
+        <div className="
                         flex
                         flex-col
                         items-center
                         justify-center
                         w-full
-        `}>
+        ">
             <div className="flex
                             flex-row
                             w-full

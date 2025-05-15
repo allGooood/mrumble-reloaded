@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LuCircleX } from "react-icons/lu";
 
 interface MenubarProps{
@@ -34,19 +35,21 @@ function Menubar({isOpen, onClose} : MenubarProps) {
                 <LuCircleX onClick={onClose} className="cursor-pointer" />
             </div>
             <div className="border border-gray-200 my-7"></div>
-            <div className="font-extrabold
+            <nav className="font-extrabold
                             text-5xl 
-                            flex 
-                            flex-col
-                            gap-y-15
             ">
-                <p>Home</p>
-                <p>Order</p>
-                <p>Locations</p>
-                <p>Catering</p>
-                <p>Gift Cards</p>
-                <p>Merch</p>
-            </div>
+                <ul className="flex
+                                flex-col
+                                gap-y-15
+                ">
+                    <li><Link href="/testpage">Home</Link></li>
+                    <li><Link href="/testpage">Order</Link></li>
+                    <li><Link href="/testpage">Locations</Link></li>
+                    <li><Link href="/testpage">Catering</Link></li>
+                    <li><Link href="/testpage">Gift Cards</Link></li>
+                    <li><Link href="/testpage">Merch</Link></li>
+                </ul>
+            </nav>
         </div>
     );
 }

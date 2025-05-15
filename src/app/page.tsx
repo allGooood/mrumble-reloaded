@@ -1,4 +1,3 @@
-import Menubar from "../components/menubar/Menubar";
 import NationalFlavors from "../components/NationalFlavors";
 
 export default function Home() {
@@ -7,7 +6,6 @@ export default function Home() {
                     justify-center
     ">
       <NationalFlavors />
-      {/* <Menubar /> */}
     </div>
   );
 }

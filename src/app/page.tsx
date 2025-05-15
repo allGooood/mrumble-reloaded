@@ -1,5 +1,5 @@
-import Menubar from "./components/menubar/Menubar";
-import NationalFlavors from "./components/NationalFlavors";
+import Menubar from "../components/menubar/Menubar";
+import NationalFlavors from "../components/NationalFlavors";
 
 export default function Home() {
   return (

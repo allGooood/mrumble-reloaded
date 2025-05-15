@@ -1,11 +1,19 @@
 import React from 'react';
+import { Nunito } from "next/font/google";
+
+const font = Nunito({
+    subsets: ["cyrillic-ext"],
+  });
 
 function Logo() {
     // const router = useRouter();
 
     return (
-        <div>
-            <h1 className='text-5xl'>crumbl</h1>
+        <div className={`${font.className} 
+                        text-5xl
+                        font-extrabold
+                        `}>
+            crumbl
         </div>
     );
 }

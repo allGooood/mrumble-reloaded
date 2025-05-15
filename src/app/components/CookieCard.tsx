@@ -28,8 +28,8 @@ function CookieCard() {
                                 gap-7
                 "> {/** 오른쪽 */}
                     <div>
-                        <p className="text-7xl font-extrabold">Milk Chocolate Chip Cookie</p>
-                        <p className="text-xl">The classic—you can&apos;t go wrong. Thick, soft, and packed with milk chocolate chips.</p>
+                        <p className="text-6xl font-extrabold">Milk Chocolate Chip Cookie</p>
+                        <p className="text-lg pt-4">The classic—you can&apos;t go wrong. Thick, soft, and packed with milk chocolate chips.</p>
                     </div>
                     <div className="flex
                                     flex-row

@@ -14,7 +14,7 @@ function Menubar() {
     const {isMenuOpen, openMenu, closeMenu} = useMenuStore();
 
     const goHome = () => {
-        close();
+        closeMenu();
         router.push("/");
     }
     
@@ -42,7 +42,7 @@ function Menubar() {
                             font-bold
             ">
                 <div>Sign in</div>
-                <LuCircleX onClick={close} className="cursor-pointer" />
+                <LuCircleX onClick={closeMenu} className="cursor-pointer" />
             </div>
             <div className="border border-gray-200 my-7"></div>
             <nav className="font-extrabold

@@ -4,6 +4,7 @@ import useMenuStore from "@/store/useMenuStore";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { LuCircleX } from "react-icons/lu";
+import MenubarItem from "./MenubarItem";
 
 function Menubar() {
     const router = useRouter();
@@ -69,7 +70,12 @@ function Menubar() {
                                 text-3xl
                                 font-bold
                 ">
-                    <div>Sign in</div>
+                    <div className="transition-colors
+                                duration-100
+                                hover:text-[#FFB9CD]
+                                cursor-pointer">
+                                    Sign in
+                    </div>
                     <LuCircleX onClick={closeMenu} className="cursor-pointer" />
                 </div>
                 <div className="border border-gray-200 my-7"></div>
@@ -80,12 +86,11 @@ function Menubar() {
                                     flex-col
                                     gap-y-15
                     ">
-                        <li className="cursor-pointer" onClick={goHome}>Home</li>
-                        <li className="cursor-pointer" onClick={() => {}}>Order</li>
-                        <li className="cursor-pointer" onClick={() => {}}>Locations</li>
-                        <li className="cursor-pointer" onClick={() => {}}>Catering</li>
-                        <li className="cursor-pointer" onClick={() => {}}>Gift Card</li>
-                        <li className="cursor-pointer" onClick={() => {}}>Merch</li>
+                        <MenubarItem onClick={goHome}>Home</MenubarItem>
+                        <MenubarItem onClick={goHome}>Order</MenubarItem>
+                        <MenubarItem onClick={goHome}>Locations</MenubarItem>
+                        <MenubarItem onClick={goHome}>Gift Cards</MenubarItem>
+                        <MenubarItem onClick={goHome}>Merch</MenubarItem>
                     </ul>
                 </nav>
             </div>

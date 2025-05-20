@@ -23,10 +23,13 @@ export default function RootLayout({
     <html lang="en">
       <head>
       </head>
-      <body className={`${font.className} flex flex-col`}>
+      <body className={`${font.className} 
+                      flex 
+                      flex-col
+                      items-center
+                      `}>
         <Navbar />
         {children}
-        {/* <Footer /> */}
       </body>
     </html>
   );

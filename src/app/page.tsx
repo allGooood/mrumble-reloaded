@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import NationalFlavors from "../components/NationalFlavors";
 
 export default function Home() {
@@ -6,6 +7,7 @@ export default function Home() {
                     justify-center
     ">
       <NationalFlavors />
+      {/* <Footer /> */}
     </div>
   );
 }

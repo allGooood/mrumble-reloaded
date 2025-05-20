@@ -7,7 +7,6 @@ function NationalFlavors() {
                             flex-col
                             gap-20
                             w-[70vw]
-                            items-center
                             ">
 
                 {[...Array(5)].map((idx) => (

@@ -44,7 +44,7 @@ function Product({id,
                         src={url + imageUrl} alt="" fill/>
                 )}
                 {isSoldOut && (
-                    <div className="absolute inset-0 bg-white opacity-50 z-15" />
+                    <div className="absolute inset-0 bg-white opacity-50 z-5" />
                 )}
             </div>
             <div>

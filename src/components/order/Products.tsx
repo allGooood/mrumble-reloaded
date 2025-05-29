@@ -26,7 +26,14 @@ function Products({category, products}: ProductGroup) {
                         md:mb-16
         ">
             {/** Title */}
-            <div className="text-4xl font-extrabold py-4">
+            <div className="text-[34px]
+                            leading-[40px]
+                            lg:text-[46px]
+                            lg:leading-[46px]
+                            2xl:text-[50px]
+                            2xl:leading-[65px]
+                            font-extrabold py-4
+            ">
                 {category}
             </div>
             

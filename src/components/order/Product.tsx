@@ -24,9 +24,11 @@ function Product({id,
         sku}: ProductProps) {
 
     const url: string = "/order/";
+    const isSoldOut = stock === 0;
 
     return (
-        <div>
+        <div className={`${isSoldOut? 'cursor-default' : 'cursor-pointer' }`} 
+            onClick={() => {}}>
             <div className="relative 
                             rounded
                             w-[100px]
@@ -40,6 +42,9 @@ function Product({id,
                 {imageUrl && (
                     <Image className="object-cover" 
                         src={url + imageUrl} alt="" fill/>
+                )}
+                {isSoldOut && (
+                    <div className="absolute inset-0 bg-white opacity-50 z-15" />
                 )}
             </div>
             <div>
@@ -59,13 +64,22 @@ function Product({id,
                 ">
                     {productName}
                 </p>
-                <p className="text-[16px]
-                            leading-[20px]
-                            2xl:text-[18px]
-                            2xl:leading-[22px]
+                <div className="font-light
+                                flex
+                                gap-2
+                                text-[16px]
+                                leading-[20px]
+                                2xl:text-[18px]
+                                2xl:leading-[22px]
                 ">
-                    ${price}
-                </p>
+                    <p className={`${isSoldOut? "line-through" : ""} `}>
+                        ${price}
+                    </p>
+
+                    {isSoldOut && (
+                        <p>Sold Out</p>
+                    )}
+                </div>
             </div>
         </div>
     );

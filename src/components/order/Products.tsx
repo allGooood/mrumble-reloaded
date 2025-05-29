@@ -2,7 +2,24 @@ import React from 'react';
 import Image from 'next/image';
 import Product from './Product';
 
-function Products() {
+interface ProductGroup{
+    category: string,
+    products: ProductProps[]
+}
+
+interface ProductProps{
+    id: number,
+    category: string,
+    productName: string,
+    stock: number,
+    price: string,
+    discountPercentage?: string,
+    imageUrl?: string,
+    description?: string,
+    sku: string
+}
+
+function Products({category, products}: ProductGroup) {
     return (
         <div className="w-full
                         mb-8
@@ -10,7 +27,7 @@ function Products() {
         ">
             {/** Title */}
             <div className="text-4xl font-extrabold py-4">
-                Large Desserts
+                {category}
             </div>
             
             <div className="grid 
@@ -22,11 +39,20 @@ function Products() {
                             md:divide-y-0
                             md:gap-9
             ">
-                {/** Product */}
-                <Product />
-                <Product />
-                <Product />
-                <Product />
+                {products.map((product => 
+                    <Product 
+                        key={product.id}
+                        id={product.id}
+                        category={product.category}
+                        productName={product.productName}
+                        stock={product.stock}
+                        price={product.price}
+                        discountPercentage={product.discountPercentage}
+                        imageUrl={product.imageUrl}
+                        description={product.description}
+                        sku={product.sku}
+                    />
+                ))}
             </div>
         </div>
     );

@@ -5,19 +5,16 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { LuCircleX } from "react-icons/lu";
 import MenubarItem from "./MenubarItem";
+import { useNavigation } from "@/hooks/UseNavigation";
 
 function Menubar() {
     const router = useRouter();
     const {isMenuOpen, openMenu, closeMenu} = useMenuStore();
+    const { goOrder } = useNavigation();
 
     const goHome = () => {
         closeMenu();
         router.push("/");
-    }
-
-    const goOrder = () => {
-        closeMenu();
-        router.push("/order");
     }
 
     useEffect(() => {

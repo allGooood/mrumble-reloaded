@@ -4,6 +4,8 @@ import Products from "@/components/order/Products";
 import Wrapper from "@/components/wrapper/Wrapper";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import { useSearchParams } from "next/navigation";
+import ProductDetail from "@/components/order/ProductDetail";
 
 interface ProductGroupProps{
     category: string,
@@ -24,6 +26,9 @@ interface ProductProps{
 
 function Page() {
     const [products, setProducts] = useState<ProductGroupProps[]>([]);
+
+    const searchParams = useSearchParams();
+    const productId = searchParams.get('productId');
 
     useEffect(() => {
         axios.get('http://localhost:4000/products')
@@ -65,6 +70,10 @@ function Page() {
                             products={products.items}
                         />
                     ))}
+
+                    {productId && (
+                        <ProductDetail />
+                    )}
                 </div>
             </Wrapper>
         </>

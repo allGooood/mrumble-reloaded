@@ -1,5 +1,8 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from "next/navigation";
 
 interface ProductProps{
     id: number,
@@ -23,12 +26,19 @@ function Product({id,
         description, 
         sku}: ProductProps) {
 
+    const router = useRouter();
+
     const url: string = "/order/";
     const isSoldOut = stock === 0;
 
+    const goDetail = (id : number) => {
+        // router.push(`/order?productId=${id}`);
+        router.push(`/order/${id}`);
+    };
+
     return (
-        <div className={`${isSoldOut? 'cursor-default' : 'cursor-pointer' }`} 
-            onClick={() => {}}>
+        <div className="cursor-pointer"
+            onClick={() => goDetail(id)}>
             <div className="relative 
                             rounded
                             w-[100px]

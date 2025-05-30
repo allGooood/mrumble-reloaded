@@ -15,7 +15,7 @@ function Menubar() {
     const goHome = () => {
         closeMenu();
         router.push("/");
-    }
+    };
 
     useEffect(() => {
         if(isMenuOpen){

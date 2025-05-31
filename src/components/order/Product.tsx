@@ -3,6 +3,8 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
+import { IMAGE_PATH } from '@/util/constants';
+import SoldOutImage from '../SoldOutImage';
 
 interface ProductProps{
     id: number,
@@ -28,7 +30,6 @@ function Product({id,
 
     const router = useRouter();
 
-    const url: string = "/order/";
     const isSoldOut = stock === 0;
 
     const goDetail = (id : number) => {
@@ -51,11 +52,9 @@ function Product({id,
             ">
                 {imageUrl && (
                     <Image className="object-cover" 
-                        src={url + imageUrl} alt="" fill/>
+                        src={IMAGE_PATH + imageUrl} alt="" fill/>
                 )}
-                {isSoldOut && (
-                    <div className="absolute inset-0 bg-white opacity-50 z-5" />
-                )}
+                {isSoldOut && (<SoldOutImage />)}
             </div>
             <div>
                 {discountPercentage && (

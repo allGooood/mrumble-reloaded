@@ -27,14 +27,14 @@ interface ProductProps{
 function Page() {
     const [products, setProducts] = useState<ProductGroupProps[]>([]);
 
-    const searchParams = useSearchParams();
-    const productId = searchParams.get('productId');
+    // const searchParams = useSearchParams();
+    // const productId = searchParams.get('productId');
 
     useEffect(() => {
         axios.get('http://localhost:4000/products')
         .then((res) => {
             const data = res.data;
-            console.log(data);
+            // console.log(data);
             const categoryKeys = Object.keys(data).filter(key => 
                 Array.isArray(data[key])
             );
@@ -53,7 +53,7 @@ function Page() {
                 }))
             }));
 
-            console.log(sorted);
+            // console.log(sorted);
             setProducts(sorted);
         })
         .catch((err) => console.error(err))
@@ -71,9 +71,9 @@ function Page() {
                         />
                     ))}
 
-                    {productId && (
+                    {/* {productId && (
                         <ProductDetail />
-                    )}
+                    )} */}
                 </div>
             </Wrapper>
         </>

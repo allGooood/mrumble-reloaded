@@ -1,14 +1,42 @@
 'use client';
 
 import Wrapper from '@/components/wrapper/Wrapper';
-import { useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import QuantitySelector from '@/components/QuantitySelector';
+import axios from 'axios';
+import { IMAGE_PATH } from '@/util/constants';
+import SoldOutImage from '@/components/SoldOutImage';
+
+interface ProductProps{
+    id: number,
+    category: string,
+    product_name: string,
+    stock: number,
+    price: string,
+    discount_percentage?: string,
+    image_url?: string,
+    description?: string,
+    sku: string
+}
 
 function Page() {
-    const searchParams = useSearchParams();
-    const search = searchParams.get('productid');
+    const [product, setProduct] = useState<ProductProps>();
+
+    const useParms = useParams();
+    const productId = useParms?.productId;
+
+    const isSoldOut = product?.stock === 0;
+
+    useEffect(() => {
+        axios.get(`http://localhost:4000/products/${productId}`)
+        .then((res) => {
+            const data = res.data[0];
+            setProduct(data);
+            console.log(data);
+        });
+    }, [productId]);
 
     return (
         <>
@@ -35,7 +63,8 @@ function Page() {
                                         overflow-hidden
                         ">   
                             <Image className="object-contain"
-                                src="/order/cookie_cutter.jpg" alt="" fill/>
+                                src={IMAGE_PATH + product?.image_url} alt="" fill/>
+                            {isSoldOut && <SoldOutImage />}
                         </div>
                     </div>
                     <div className="
@@ -45,38 +74,54 @@ function Page() {
                                     md:text-6xl
                                     font-medium
                                     text-2xl
-                        ">Cookie Cutter</p>
+                        ">
+                            {product?.product_name}
+                        </p>
                         <div className="mt-[5px]
                                         mb-[20px]
+                                        inline-flex
                         ">
-                            <p>$4.99</p>
-                            {/** Sold out 표시 */}
+                            <p className={`${isSoldOut? "line-through" : "normal-case"} 
+                                            flex 
+                                            items-center
+                            `}>
+                                ${product?.price}
+                            </p>
+            
+                            {isSoldOut && (
+                                <p className="text-xl pl-[10px]">Sold Out</p>
+                            )}
+
                         </div>
-                        <p>The perfect tool for cutting your cookies. Effortlessly watch as the Cookie Cutter divides your treat into four to share with your friends and family.</p>
+                        <p>{product?.description}</p>
                         <div className="mt-[20px]
                                         justify-between
                                         flex
                                         gap-5
                                         h-[45px]
                         ">
-                            <QuantitySelector />
-                            <button className="bg-black
-                                                cursor-pointer
-                                                text-white
-                                                text-[18px]
-                                                font-medium
-                                                py-[15px]
-                                                px-[70px]
-                                                2xl:px-[90px]
-                                                rounded-full
-                                                h-full
-                                                whitespace-nowrap
-                                                flex
-                                                items-center
-                            "
-                                onClick={() => {}}>
-                                    Add to Bag
-                            </button>
+                            {!isSoldOut && (
+                                <>
+                                    <QuantitySelector />
+                                    <button className="bg-black
+                                                        cursor-pointer
+                                                        text-white
+                                                        text-[18px]
+                                                        font-medium
+                                                        py-[15px]
+                                                        px-[70px]
+                                                        2xl:px-[90px]
+                                                        rounded-full
+                                                        h-full
+                                                        whitespace-nowrap
+                                                        flex
+                                                        items-center
+                                    "
+                                        onClick={() => {}}>
+                                            Add to Bag
+                                    </button>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

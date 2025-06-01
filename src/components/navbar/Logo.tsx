@@ -10,14 +10,14 @@ const font = Nunito({
   });
 
 function Logo() {
-    const {isMenuOpen, openMenu, closeMenu} = useMenuStore();
+    const menu = useMenuStore();
 
     return (
         <div className={`${font.className} 
                         text-5xl
                         font-extrabold
                         `}>
-            <Link href="/" onClick={closeMenu}>Crumbl</Link>
+            <Link href="/" onClick={menu.close}>Crumbl</Link>
         </div>
     );
 }

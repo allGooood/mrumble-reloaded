@@ -3,12 +3,10 @@ import { useRouter } from "next/navigation";
 
 export const useNavigation = () => {
     const router = useRouter();
-    const {isMenuOpen, openMenu, closeMenu} = useMenuStore();
-
-  
+    const menu = useMenuStore();
 
     const goOrder = () => {
-        closeMenu();
+        menu.close();
         router.push("/order");
     }
 

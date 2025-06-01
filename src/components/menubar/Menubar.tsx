@@ -9,29 +9,29 @@ import { useNavigation } from "@/hooks/UseNavigation";
 
 function Menubar() {
     const router = useRouter();
-    const {isMenuOpen, openMenu, closeMenu} = useMenuStore();
+    const menu = useMenuStore();
     const { goOrder } = useNavigation();
 
     const goHome = () => {
-        closeMenu();
+        menu.close();
         router.push("/");
     };
 
     useEffect(() => {
-        if(isMenuOpen){
+        if(menu.isOpen){
             document.body.style.overflow = "hidden";
         }else {
             document.body.style.overflow = "";
         }
-    }, [isMenuOpen]);
+    }, [menu.isOpen]);
 
-    if(!isMenuOpen) return null;
+    if(!menu.isOpen) return null;
     
     return (
         <>
             {/** Over Lay */}
             <div className="fixed inset-0 h-screen bg-gray-500 opacity-50 z-10"
-                onClick={closeMenu} 
+                onClick={menu.close} 
             />
 
             {/** Menu Bar */}
@@ -63,7 +63,7 @@ function Menubar() {
                                 cursor-pointer">
                                     Sign in
                     </div>
-                    <LuCircleX onClick={closeMenu} className="cursor-pointer" />
+                    <LuCircleX onClick={menu.close} className="cursor-pointer" />
                 </div>
                 <div className="border border-gray-200 my-7"></div>
                 <nav className="font-extrabold

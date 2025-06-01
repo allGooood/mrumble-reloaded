@@ -1,15 +1,15 @@
 import { create } from 'zustand';
 
 interface MenuState {
-    isMenuOpen: boolean,
-    openMenu: () => void;
-    closeMenu: () => void;
+    isOpen: boolean,
+    open: () => void;
+    close: () => void;
 }
 
 const useMenuStore = create<MenuState>((set) => ({
-    isMenuOpen: false,
-    openMenu: () => set({ isMenuOpen: true}),
-    closeMenu: () => set({ isMenuOpen: false}),
+    isOpen: false,
+    open: () => set({ isOpen: true}),
+    close: () => set({ isOpen: false}),
 }));
 
 export default useMenuStore;

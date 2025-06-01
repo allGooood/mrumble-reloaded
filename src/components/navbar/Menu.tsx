@@ -6,7 +6,7 @@ import Menubar from '../menubar/Menubar';
 import useMenuStore from '@/store/useMenuStore';
 
 function Menu() {
-    const {isMenuOpen, openMenu, closeMenu} = useMenuStore();
+    const menu = useMenuStore();
 
     return (
         <div className='flex 
@@ -14,8 +14,8 @@ function Menu() {
                         items-center
                         gap-2
                         '>
-            <CgMenuRight className="cursor-pointer scale-x-[-1]" onClick={openMenu} size={30}/>
-            <div className="cursor-pointer" onClick={openMenu}>Menu</div>
+            <CgMenuRight className="cursor-pointer scale-x-[-1]" onClick={menu.open} size={30}/>
+            <div className="cursor-pointer" onClick={menu.open}>Menu</div>
             <Menubar />
         </div>
     );

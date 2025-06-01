@@ -59,10 +59,15 @@ function Product({id,
             <div>
                 {discountPercentage && (
                     <span className="inline-flex italic h-[21px] items-center">
-                        <span className="bg-[#FFE6E5] py-1.5 px-[5px] h-[21px]">
-                            <p className="text-[13px] leading-[15px] 2xl:text-[14px] 2xl:leading-[16px]">Save {discountPercentage}%</p>
+                        <span className="bg-[#FFE6E5] 
+                                        py-1.5 
+                                        px-[5px] 
+                                        h-[21px] 
+                                        flex 
+                                        items-center">
+                            <p className="text-[13px] leading-[15px] 2xl:text-[13px] 2xl:leading-[16px]">Save {discountPercentage}%</p>
                         </span>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="21" fill="none" viewBox="0 0 9 21" className="text-primary-light -ml-[1px]"><path fill="currentColor" d="M7.826 0H0v21h7.953a1 1 0 0 0 .789-1.615L1.429 10l7.156-8.35A1 1 0 0 0 7.825 0"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="21" fill="none" viewBox="0 0 9 21" className="text-primary-light -ml-[1px]"><path fill="#FFE6E5" d="M7.826 0H0v21h7.953a1 1 0 0 0 .789-1.615L1.429 10l7.156-8.35A1 1 0 0 0 7.825 0"></path></svg>
                     </span>
                 )}
                 <p className="text-[24px]

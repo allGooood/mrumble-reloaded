@@ -1,7 +1,7 @@
 import useMenuStore from "@/store/useMenuStore";
 import { useRouter } from "next/navigation";
 
-export const useNavigation = () => {
+export const useMenuNavigation = () => {
     const router = useRouter();
     const menu = useMenuStore();
 
@@ -10,5 +10,13 @@ export const useNavigation = () => {
         router.push("/order");
     }
 
-    return { goOrder };
+    const goHome = () => {
+        menu.close();
+        router.push("/");
+    }
+
+    return { 
+        goOrder, 
+        goHome 
+    };
 }

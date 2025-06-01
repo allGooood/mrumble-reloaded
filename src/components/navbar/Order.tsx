@@ -1,10 +1,10 @@
 'use client';
 
-import { useNavigation } from '@/hooks/UseNavigation';
+import { useMenuNavigation } from '@/hooks/UseMenuNavigation';
 import React from 'react';
 
 function Order() {
-    const {goOrder} = useNavigation();
+    const {goOrder} = useMenuNavigation();
 
     return (
         <div className='bg-black 

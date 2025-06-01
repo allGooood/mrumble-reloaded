@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { LuCircleX } from "react-icons/lu";
 import MenubarItem from "./MenubarItem";
-import { useNavigation } from "@/hooks/UseNavigation";
+import { useMenuNavigation } from "@/hooks/UseMenuNavigation";
 
 function Menubar() {
     const router = useRouter();
     const menu = useMenuStore();
-    const { goOrder } = useNavigation();
+    const menuNavi = useMenuNavigation();
 
     const goHome = () => {
         menu.close();
@@ -73,8 +73,8 @@ function Menubar() {
                                     flex-col
                                     gap-y-15
                     ">
-                        <MenubarItem onClick={goHome}>Home</MenubarItem>
-                        <MenubarItem onClick={goOrder}>Order</MenubarItem>
+                        <MenubarItem onClick={menuNavi.goHome}>Home</MenubarItem>
+                        <MenubarItem onClick={menuNavi.goOrder}>Order</MenubarItem>
                         <MenubarItem onClick={goHome}>Locations</MenubarItem>
                         <MenubarItem onClick={goHome}>Gift Cards</MenubarItem>
                         <MenubarItem onClick={goHome}>Merch</MenubarItem>

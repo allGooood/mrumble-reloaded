@@ -6,7 +6,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import QuantitySelector from '@/components/QuantitySelector';
 import axios from 'axios';
-import { IMAGE_PATH } from '@/util/constants';
+import { IMAGE_PATH } from '@/utils/constants';
 import SoldOutImage from '@/components/SoldOutImage';
 
 interface ProductProps{

@@ -1,21 +1,14 @@
 'use client';
 
-import useMenuStore from "@/store/useMenuStore";
-import { useRouter } from "next/navigation";
+import useMenuStore from "@/stores/useMenuStore";
 import { useEffect } from "react";
 import { LuCircleX } from "react-icons/lu";
 import MenubarItem from "./MenubarItem";
 import { useMenuNavigation } from "@/hooks/UseMenuNavigation";
 
 function Menubar() {
-    const router = useRouter();
     const menu = useMenuStore();
     const menuNavi = useMenuNavigation();
-
-    const goHome = () => {
-        menu.close();
-        router.push("/");
-    };
 
     useEffect(() => {
         if(menu.isOpen){
@@ -75,9 +68,9 @@ function Menubar() {
                     ">
                         <MenubarItem onClick={menuNavi.goHome}>Home</MenubarItem>
                         <MenubarItem onClick={menuNavi.goOrder}>Order</MenubarItem>
-                        <MenubarItem onClick={goHome}>Locations</MenubarItem>
-                        <MenubarItem onClick={goHome}>Gift Cards</MenubarItem>
-                        <MenubarItem onClick={goHome}>Merch</MenubarItem>
+                        <MenubarItem onClick={() => {}}>Locations</MenubarItem>
+                        <MenubarItem onClick={() => {}}>Gift Cards</MenubarItem>
+                        <MenubarItem onClick={() => {}}>Merch</MenubarItem>
                     </ul>
                 </nav>
             </div>

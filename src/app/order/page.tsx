@@ -4,8 +4,6 @@ import Products from "@/components/order/Products";
 import Wrapper from "@/components/wrapper/Wrapper";
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import { useSearchParams } from "next/navigation";
-import ProductDetail from "@/components/order/ProductDetail";
 
 interface ProductGroupProps{
     category: string,
@@ -24,8 +22,17 @@ interface ProductProps{
     sku: string
 }
 
+
 function Page() {
     const [products, setProducts] = useState<ProductGroupProps[]>([]);
+    
+    const categoryOrder = [
+        "Large Desserts",
+        "Mini Desserts",
+        "Extras",
+        "Gift Cards",
+        "Family Desserts"
+    ];
 
     // const searchParams = useSearchParams();
     // const productId = searchParams.get('productId');
@@ -34,10 +41,11 @@ function Page() {
         axios.get('http://localhost:4000/products')
         .then((res) => {
             const data = res.data;
-            // console.log(data);
+
             const categoryKeys = Object.keys(data).filter(key => 
                 Array.isArray(data[key])
             );
+
             const sorted: ProductGroupProps[] = categoryKeys.map(category => ({
                 category,
                 items: data[category].map((item: any): ProductProps => ({
@@ -53,8 +61,8 @@ function Page() {
                 }))
             }));
 
-            // console.log(sorted);
             setProducts(sorted);
+            console.log(sorted);
         })
         .catch((err) => console.error(err))
     }, []);
@@ -63,17 +71,16 @@ function Page() {
         <>
             <Wrapper>
                 <div className="flex flex-col">
-                    {products.map((products => 
-                        <Products 
-                            key={products.category} 
-                            category={products.category}
-                            products={products.items}
-                        />
-                    ))}
+                    {categoryOrder.map((category) => {
+                        const row = products.find(p => p.category===category);
+                        if(!row || !row.items?.length) return null;
 
-                    {/* {productId && (
-                        <ProductDetail />
-                    )} */}
+                        return <Products 
+                                key={category}
+                                category={category}
+                                products={row.items} 
+                        />
+                    })}
                 </div>
             </Wrapper>
         </>

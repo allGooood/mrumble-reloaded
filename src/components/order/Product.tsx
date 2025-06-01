@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useRouter } from "next/navigation";
-import { IMAGE_PATH } from '@/util/constants';
+import { IMAGE_PATH } from '@/utils/constants';
 import SoldOutImage from '../SoldOutImage';
 
 interface ProductProps{

@@ -19,7 +19,8 @@ interface ProductProps{
     discountPercentage?: string,
     imageUrl?: string,
     description?: string,
-    sku: string
+    sku: string,
+    hasOption: boolean,
 }
 
 
@@ -58,6 +59,7 @@ function Page() {
                     imageUrl: item.image_url ?? undefined,
                     description: item.description ?? undefined,
                     sku: item.sku,
+                    hasOption: item.has_option
                 }))
             }));
 

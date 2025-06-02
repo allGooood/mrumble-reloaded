@@ -16,7 +16,8 @@ interface ProductProps{
     discountPercentage?: string,
     imageUrl?: string,
     description?: string,
-    sku: string
+    sku: string,
+    hasOption: boolean,
 }
 
 function Products({category, products}: ProductGroup) {
@@ -58,6 +59,7 @@ function Products({category, products}: ProductGroup) {
                         imageUrl={product.imageUrl}
                         description={product.description}
                         sku={product.sku}
+                        hasOption={product.hasOption}
                     />
                 ))}
             </div>

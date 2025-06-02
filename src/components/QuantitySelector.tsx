@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 
-function QuantitySelector() {
-    // const MAX_COUNT = 10;
-    const MIN_COUNT = 1;
+interface QuantitySelectorProps {
+    minimum?: number;
+  }
 
+function QuantitySelector({ minimum }: QuantitySelectorProps) {
+    // const MAX_COUNT = 10;
+
+    const MIN_COUNT = minimum ?? 1; 
     const [count, setCount] = useState(MIN_COUNT);
 
     {/** TODO 수량 제한 정책? */}
@@ -14,19 +18,6 @@ function QuantitySelector() {
     const countDown = () => {
         setCount(prev => Math.max(MIN_COUNT, prev-1));
     }
-
-    // const Button = () => {
-    //     return( 
-    //         <button className={`${count === MIN_COUNT? "text-gray-400" : "text-black"} 
-    //                             cursor-pointer
-    //                             text-2xl
-    //                         `}
-    //             onClick={countDown}
-    //         >
-    //             -
-    //         </button>
-    //     );
-    // }
 
     return (
         <div className="inline-flex

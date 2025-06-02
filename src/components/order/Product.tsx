@@ -15,7 +15,8 @@ interface ProductProps{
     discountPercentage?: string,
     imageUrl?: string,
     description?: string,
-    sku: string
+    sku: string,
+    hasOption: boolean,
 }
 
 function Product({id, 
@@ -26,7 +27,8 @@ function Product({id,
         discountPercentage, 
         imageUrl, 
         description, 
-        sku}: ProductProps) {
+        sku,
+        hasOption}: ProductProps) {
 
     const router = useRouter();
 

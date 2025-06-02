@@ -30,11 +30,11 @@ function ProductDetail({product} : Product,
     return (
         <>
             <div className="flex
-                                    flex-col
-                                    xl:flex-row
-                                    xl:justify-center   
-                                    pt-[20px]
-                                    xl:px-[100px]
+                            flex-col
+                            xl:flex-row
+                            xl:justify-center   
+                            pt-[20px]
+                            xl:px-[100px]
                 ">
                     <div className="2xl:mr-[100px] 
                                     xl:mr-[50px]

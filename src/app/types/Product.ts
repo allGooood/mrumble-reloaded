@@ -8,6 +8,8 @@ export interface ProductProps {
     imageUrl?: string;
     description?: string;
     sku: string;
+    has_option: boolean;
+
   }
   
   export interface ProductGroup {

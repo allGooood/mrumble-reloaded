@@ -1,20 +1,20 @@
 'use client';
 
-import { useMenuNavigation } from '@/hooks/UseMenuNavigation';
+import { useMenuNavigation } from '@/app/hooks/UseMenuNavigation';
 import React from 'react';
+import Button from '../Button';
 
 function Order() {
-    const {goOrder} = useMenuNavigation();
+    const menuNavi = useMenuNavigation();
 
     return (
-        <div className='bg-black 
-                        text-white
-                        rounded-full
-                        py-2.5
-                        px-7
-                        cursor-pointer'>
-            <p onClick={goOrder}>Order Now</p>
-        </div>
+        <>
+            <Button className="py-2.5 px-7"
+                variant="primary"
+                onClick={menuNavi.goOrder}>
+                    Order Now
+            </Button>
+        </>
     );
 }
 

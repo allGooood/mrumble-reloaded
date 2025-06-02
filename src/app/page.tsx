@@ -1,5 +1,5 @@
 import Footer from "@/components/Footer";
-import NationalFlavors from "../components/NationalFlavors";
+import NationalFlavors from "../components/main/NationalFlavors";
 
 export default function Home() {
   return (

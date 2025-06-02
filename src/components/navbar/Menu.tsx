@@ -3,7 +3,7 @@
 import { CgMenuRight } from "react-icons/cg";
 
 import Menubar from '../menubar/Menubar';
-import useMenuStore from '@/stores/useMenuStore';
+import useMenuStore from '@/app/stores/useMenuStore';
 
 function Menu() {
     const menu = useMenuStore();

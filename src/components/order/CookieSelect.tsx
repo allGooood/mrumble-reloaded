@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import QuantitySelector from '../QuantitySelector';
 import Image from 'next/image';

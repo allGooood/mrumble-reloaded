@@ -1,10 +1,10 @@
 'use client';
 
-import useMenuStore from "@/stores/useMenuStore";
+import useMenuStore from "@/app/stores/useMenuStore";
 import { useEffect } from "react";
 import { LuCircleX } from "react-icons/lu";
 import MenubarItem from "./MenubarItem";
-import { useMenuNavigation } from "@/hooks/UseMenuNavigation";
+import { useMenuNavigation } from "@/app/hooks/UseMenuNavigation";
 
 function Menubar() {
     const menu = useMenuStore();

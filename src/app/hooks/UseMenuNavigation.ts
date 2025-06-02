@@ -1,4 +1,4 @@
-import useMenuStore from "@/stores/useMenuStore";
+import useMenuStore from "@/app/stores/useMenuStore";
 import { useRouter } from "next/navigation";
 
 export const useMenuNavigation = () => {

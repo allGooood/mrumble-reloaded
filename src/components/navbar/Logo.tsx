@@ -3,7 +3,7 @@
 import React from 'react';
 import { Nunito } from "next/font/google";
 import Link from 'next/link';
-import useMenuStore from '@/stores/useMenuStore';
+import useMenuStore from '@/app/stores/useMenuStore';
 
 const font = Nunito({
     subsets: ["cyrillic-ext"],

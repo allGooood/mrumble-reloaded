@@ -6,11 +6,13 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import QuantitySelector from '@/components/QuantitySelector';
 import axios from 'axios';
-import { IMAGE_PATH } from '@/utils/constants';
+import { IMAGE_PATH } from '@/app/utils/constants';
 import SoldOutImage from '@/components/SoldOutImage';
 import ProductDetail from '@/components/order/ProductDetail';
 import CookieSelect from '@/components/order/CookieSelect';
 import CookieSelectTable from '@/components/order/CookieSelectTable';
+import Button from '@/components/Button';
+import SwitchToggle from '@/components/SwitchToggle';
 
 interface ProductProps{
     id: number,
@@ -121,36 +123,23 @@ function Page() {
                         </div>
                         <div className="flex flex-row justify-end pt-[50px]">
                             {/** Switch Toggle 미완성 */}
-                            {/* <div className="flex">
-                                <div className="relative">
-                                    <button className="w-14 h-8 bg-[#FFB9CD] rounded-full peer peer-checked:bg-white">
-                                        <div className="absolute top-0.5 left-0.5 rounded-full bg-white w-7 h-7" />
-                                    </button>
-                                </div>
-                                <div>
-                                    <p className="font-semibold text-lg leading-[20px]">Make this a gift</p>
-                                    <p className="absolute top-0.5 left-0.5 text-gray-400 text-sm">Gifting options available!</p>
-                                </div>
-                            </div> */}
+                            {/* <SwitchToggle /> */}
                             <div className="h-[50px]">
-                                <button className="bg-black
-                                                    cursor-pointer
-                                                    text-white
-                                                    text-[18px]
+                                <Button variant="primary"
+                                        className="text-[18px]
                                                     font-normal
                                                     py-[15px]
-                                                    rounded-full
                                                     h-full
                                                     w-[300px]
                                                     px-[30px]
-                                                    whitespace-nowrap
                                                     flex
                                                     flex-row
                                                     justify-between
-                                                    items-center">
+                                                    items-center"
+                                >
                                     <p>Add 1 more</p>
                                     <p>$ 4.69</p>
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     </div>

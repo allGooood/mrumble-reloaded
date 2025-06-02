@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
 import React from 'react';
+import Button from '../Button';
 
 function CookieCard() {
     return (
@@ -36,9 +39,16 @@ function CookieCard() {
                                     text-m
                                     font-bold
                                     gap-5
-                    ">
-                        <div className="rounded-full border-1 px-8 py-2.5">Learn More</div>
-                        <div className="rounded-full border-1 px-8 py-2.5 bg-black text-white group-hover:text-[#EBAC5A] transition duration-500">Order Now</div>
+                    ">                        
+                        <Button className="px-8 py-2.5" 
+                            onClick={() => {} } 
+                            variant="outline">
+                                Learn More
+                        </Button>
+                        <Button className="px-8 py-2.5 group-hover:text-[#EBAC5A] transition duration-500" 
+                            onClick={() => {} }>
+                                Order Now
+                        </Button>
                     </div>
                 </div>
             </div>

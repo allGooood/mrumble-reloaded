@@ -5,7 +5,7 @@ import React from 'react';
 import QuantitySelector from '../QuantitySelector';
 import SoldOutImage from '../SoldOutImage';
 import Image from 'next/image';
-import { IMAGE_PATH } from '@/utils/constants';
+import { IMAGE_PATH } from '@/app/utils/constants';
 
 
 interface ProductProps{

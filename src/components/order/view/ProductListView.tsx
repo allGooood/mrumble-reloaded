@@ -1,6 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
-import Product from './Product';
+import Product from '../ProductCard';
 
 interface ProductGroup{
     category: string,

@@ -1,6 +1,6 @@
 import React from 'react';
-import QuantitySelector from '../QuantitySelector';
-import Button from '../Button';
+import QuantitySelector from '../../QuantitySelector';
+import Button from '../../Button';
 
 interface ProductProps{
     id: number,

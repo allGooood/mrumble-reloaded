@@ -3,17 +3,7 @@
 import React from 'react';
 import QuantitySelector from '../QuantitySelector';
 import Image from 'next/image';
-
-interface CookieProps{
-    id: number,
-    cookie_name: string,
-    sku: string,
-    stock: number,
-    extra_charge: string,
-    calories: string,
-    image_url?: string,
-    category: string,
-}
+import { CookieProps } from '@/app/types/Cookie';
 
 
 function CookieSelect({id,

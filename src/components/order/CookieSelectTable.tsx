@@ -1,19 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import CookieSelect from './CookieSelect';
+import CookieSelect from './CookieSelectCard';
 import Button from '../Button';
 import axios from 'axios';
-
-
-interface CookieProps{
-    id: number,
-    cookie_name: string,
-    sku: string,
-    stock: number,
-    extra_charge: string,
-    calories: string,
-    image_url: string,
-    category: string,
-}
+import { CookieProps } from '@/app/types/Cookie';
 
 function CookieSelectTable() {
     const [cookies, setCookies] = useState<CookieProps[]>([]);

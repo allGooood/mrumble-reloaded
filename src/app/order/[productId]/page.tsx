@@ -6,23 +6,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { IMAGE_PATH } from '@/app/utils/constants';
 import SoldOutImage from '@/components/SoldOutImage';
-import CookieSelectTable from '@/components/order/CookieSelectTable';
 import Image from 'next/image';
 import ProductDetailView from '@/components/order/ProductDetailView';
 import ProductSelectView from '@/components/order/ProductSelectView';
-
-interface ProductProps{
-    id: number,
-    category: string,
-    product_name: string,
-    stock: number,
-    price: string,
-    discount_percentage?: string,
-    image_url?: string,
-    description?: string,
-    sku: string,
-    has_option: boolean,
-}
+import { ProductProps } from '@/app/types/Product';
+import CookieSelectTable from '@/components/order/CookieSelectTable';
 
 function Page() {
     const [product, setProduct] = useState<ProductProps>();
@@ -55,8 +43,10 @@ function Page() {
                         </div>
                     </div>
 
-                    {product?.has_option? 
-                        <ProductSelectView /> 
+                    {product?.has_option ? 
+                        <ProductSelectView requiredOptionCount={product.required_option_count}>
+                            <CookieSelectTable />
+                        </ProductSelectView>
                         : <ProductDetailView product={product} isSoldOut={isSoldOut} />
                     }
                 </div>

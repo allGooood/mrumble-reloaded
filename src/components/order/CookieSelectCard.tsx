@@ -1,19 +1,33 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import QuantitySelector from '../QuantitySelector';
 import Image from 'next/image';
 import { CookieProps } from '@/app/types/Cookie';
+import { QuantitySelectorProvider, useQuantitySelectorContext } from '@/app/context/RequiredOptionContext';
 
 
-function CookieSelect({id,
-                    cookie_name,
-                    sku,
-                    stock,
-                    extra_charge,
-                    calories,
-                    image_url,
-                    category}:CookieProps) {
+function CookieSelectCard({
+    id,
+    cookie_name,
+    sku,
+    stock,
+    extra_charge,
+    calories,
+    image_url,
+    category,
+    requiredOptionCount,
+    totalSelected
+}: CookieProps & { requiredOptionCount: number; totalSelected: number }) {
+
+    const context = useQuantitySelectorContext();
+    const isSelected = (context?.getQuantity(JSON.stringify(id)) ?? 0) > 0;
+    const isDisabled = totalSelected >= requiredOptionCount && !isSelected;
+    const handleChange = (count: number) => {
+        context?.setQuantity(JSON.stringify(id), count);
+    };
+
+
     return (
         <div className="flex
                         justify-between
@@ -35,10 +49,12 @@ function CookieSelect({id,
             </div>
             {/** TODO Component 컨테이너 사이즈 유연하게 수정필요? */}
             <div className="h-[40px]">
-                <QuantitySelector minimum={0} />
+                <QuantitySelector minimum={0}
+                    onChange={handleChange}
+                    isDisabled={isDisabled} />
             </div>
         </div>
     );
 }
 
-export default CookieSelect;
+export default CookieSelectCard;

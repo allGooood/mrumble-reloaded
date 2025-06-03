@@ -7,10 +7,11 @@ import axios from 'axios';
 import { IMAGE_PATH } from '@/app/utils/constants';
 import SoldOutImage from '@/components/SoldOutImage';
 import Image from 'next/image';
-import ProductDetailView from '@/components/order/ProductDetailView';
-import ProductSelectView from '@/components/order/ProductSelectView';
 import { ProductProps } from '@/app/types/Product';
 import CookieSelectTable from '@/components/order/CookieSelectTable';
+import ProductDetailView from '@/components/order/view/ProductDetailView';
+import ProductSelectView from '@/components/order/view/ProductSelectView';
+import { QuantitySelectorProvider } from '@/app/context/RequiredOptionContext';
 
 function Page() {
     const [product, setProduct] = useState<ProductProps>();
@@ -45,7 +46,9 @@ function Page() {
 
                     {product?.has_option ? 
                         <ProductSelectView requiredOptionCount={product.required_option_count}>
-                            <CookieSelectTable />
+                            <QuantitySelectorProvider>
+                                <CookieSelectTable requiredOptionCount={product.required_option_count}/>
+                            </QuantitySelectorProvider>
                         </ProductSelectView>
                         : <ProductDetailView product={product} isSoldOut={isSoldOut} />
                     }

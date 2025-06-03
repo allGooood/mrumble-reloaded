@@ -1,27 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import CookieSelect from './CookieSelectCard';
+import CookieSelectCard from './CookieSelectCard';
 import Button from '../Button';
 import axios from 'axios';
 import { CookieProps } from '@/app/types/Cookie';
+import { useQuantitySelectorContext } from '@/app/context/RequiredOptionContext';
 
-function CookieSelectTable() {
+{/** TODO 일단 Context 써보고 QunatitySelector 쓰이는 형태좀 본 뒤에 Component합성하던지 정하기 */}
+function CookieSelectTable({requiredOptionCount}:{requiredOptionCount: number}) {
     const [cookies, setCookies] = useState<CookieProps[]>([]);
 
+    const context = useQuantitySelectorContext();
+    const totalSelected = context?.total ?? 0;
+    const remainRequiredOptionCount = Math.max(0, requiredOptionCount - totalSelected);
+
+    
     useEffect(() => {
         axios.get('http://localhost:4000/cookies')
-                .then((res) => {
-                    const cookies = res.data;
-                    setCookies(cookies);
-                    console.log(cookies);
-                });
+        .then((res) => {
+            const cookies = res.data;
+            setCookies(cookies);
+        });
     }, []);
 
     return (
         <>
             <div className="flex flex-col">
                 {cookies.map(cookie => (
-                    <CookieSelect key={cookie.id}
+                    <CookieSelectCard key={cookie.id}
                                     {...cookie}
+                                    requiredOptionCount={requiredOptionCount}
+                                    totalSelected={totalSelected}
                     />
                 ))}
             </div>
@@ -40,7 +48,7 @@ function CookieSelectTable() {
                                         justify-between
                                         items-center"
                     >
-                        <p>Add 1 more</p>
+                        <p>Add {remainRequiredOptionCount} more</p>
                         <p>$ 4.69</p>
                     </Button>
                 </div>

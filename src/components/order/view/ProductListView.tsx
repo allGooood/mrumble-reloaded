@@ -1,5 +1,5 @@
 import React from 'react';
-import Product from '../ProductCard';
+import ProductCard from '../ProductCard';
 
 interface ProductGroup{
     category: string,
@@ -19,7 +19,7 @@ interface ProductProps{
     hasOption: boolean,
 }
 
-function Products({category, products}: ProductGroup) {
+function ProductListView({category, products}: ProductGroup) {
     return (
         <div className="w-full
                         mb-8
@@ -47,7 +47,7 @@ function Products({category, products}: ProductGroup) {
                             md:gap-9
             ">
                 {products.map((product => 
-                    <Product 
+                    <ProductCard 
                         key={product.id}
                         id={product.id}
                         category={product.category}
@@ -66,4 +66,4 @@ function Products({category, products}: ProductGroup) {
     );
 }
 
-export default Products;
+export default ProductListView;

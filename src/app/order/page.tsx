@@ -1,9 +1,9 @@
 'use client';
 
-import Products from "@/components/order/Products";
 import Wrapper from "@/components/wrapper/Wrapper";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import ProductListView from "@/components/order/view/ProductListView";
 
 interface ProductGroupProps{
     category: string,
@@ -77,7 +77,7 @@ function Page() {
                         const row = products.find(p => p.category===category);
                         if(!row || !row.items?.length) return null;
 
-                        return <Products 
+                        return <ProductListView
                                 key={category}
                                 category={category}
                                 products={row.items} 

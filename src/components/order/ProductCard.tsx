@@ -19,7 +19,7 @@ interface ProductProps{
     hasOption: boolean,
 }
 
-function Product({id, 
+function ProductCard({id, 
         category, 
         productName, 
         stock, 
@@ -101,4 +101,4 @@ function Product({id,
     );
 }
 
-export default Product;
+export default ProductCard;

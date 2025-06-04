@@ -23,10 +23,11 @@ function CookieSelectCard({
     const context = useQuantitySelectorContext();
     const isSelected = (context?.getQuantity(JSON.stringify(id)) ?? 0) > 0;
     const isDisabled = totalSelected >= requiredOptionCount && !isSelected;
+    const disableIncrement = totalSelected >= requiredOptionCount && isSelected;
+
     const handleChange = (count: number) => {
         context?.setQuantity(JSON.stringify(id), count);
     };
-
 
     return (
         <div className="flex
@@ -35,6 +36,7 @@ function CookieSelectCard({
                         border-gray-200
                         py-[10px]
                         ">
+
             <div className="flex flex-row">
                 <div className="w-[50px]
                                 h-[50px]
@@ -47,11 +49,12 @@ function CookieSelectCard({
                     <p className="leading-[16px] text-gray-500 text-sm">{calories} cal</p>
                 </div>
             </div>
-            {/** TODO Component 컨테이너 사이즈 유연하게 수정필요? */}
+
             <div className="h-[40px]">
                 <QuantitySelector minimum={0}
                     onChange={handleChange}
-                    isDisabled={isDisabled} />
+                    isDisabled={isDisabled}
+                    disableIncrement={disableIncrement} />
             </div>
         </div>
     );

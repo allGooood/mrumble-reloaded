@@ -5,6 +5,7 @@ interface QuantitySelectorProps {
     maximum?: number;
     onChange?: (count: number) => void;
     isDisabled?: boolean;
+    disableIncrement?: boolean;
   }
 
 function QuantitySelector({ 
@@ -12,6 +13,7 @@ function QuantitySelector({
     , onChange
     , isDisabled = false 
     , maximum = 10
+    , disableIncrement = false
 }: QuantitySelectorProps) {
     const [count, setCount] = useState(minimum);
 
@@ -21,7 +23,6 @@ function QuantitySelector({
 
     const countUp = () => {
         if(isDisabled) return;
-        // setCount((prev) => Math.max(minimum, prev - 1));
         setCount(prev => {
             const newCount = Math.min(prev + 1, maximum);
             return newCount;
@@ -30,7 +31,6 @@ function QuantitySelector({
 
     const countDown = () => {
         if(isDisabled) return;
-        // setCount((prev) => Math.min(maximum, prev + 1));
         setCount(prev => {
             const newCount = Math.max(minimum, prev-1);
             return newCount;
@@ -38,15 +38,15 @@ function QuantitySelector({
     };
 
     const isAtMin = count <= minimum;
-    const isAtMax = count >= maximum;
+    const isAtMax = count >= maximum || disableIncrement;
 
     return (
         <div className={`inline-flex items-center justify-between rounded-full border-[1px] border-gray-200 
                         min-w-[110px] min-h-[50px] w-[150px] 2xl:w-[178px] h-full p-5
                     ${isDisabled ? "opacity-50 pointer-events-none" : ""}`}>
             
-            <button className={`text-2xl 
-                        ${isAtMin ? "text-gray-400" : "text-black"}`}
+            <button className={`text-2xl cursor-pointer
+                        ${isAtMin || isDisabled? "text-gray-400" : "text-black"}`}
                     onClick={countDown}
                     disabled={isAtMin}>
                 -
@@ -54,7 +54,7 @@ function QuantitySelector({
 
             <p>{count}</p>
             
-            <button className={`text-2xl ${isAtMax ? "text-gray-400" : "text-black"}`}
+            <button className={`text-2xl cursor-pointer ${isAtMax || isDisabled ? "text-gray-400" : "text-black"}`}
                     onClick={countUp}
                     disabled={isAtMax}>
                 +

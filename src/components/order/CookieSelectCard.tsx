@@ -4,7 +4,7 @@ import React, { useCallback } from 'react';
 import QuantitySelector from '../QuantitySelector';
 import Image from 'next/image';
 import { CookieProps } from '@/app/types/Cookie';
-import { QuantitySelectorProvider, useQuantitySelectorContext } from '@/app/context/RequiredOptionContext';
+import { QuantitySelectorProvider, useQuantitySelectorContext } from '@/app/context/QuantitySelectorContext';
 
 
 function CookieSelectCard({
@@ -51,7 +51,8 @@ function CookieSelectCard({
             </div>
 
             <div className="h-[40px]">
-                <QuantitySelector minimum={0}
+                <QuantitySelector 
+                    minimum={0}
                     onChange={handleChange}
                     isDisabled={isDisabled}
                     disableIncrement={disableIncrement} />

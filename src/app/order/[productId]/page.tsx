@@ -11,7 +11,7 @@ import { ProductProps } from '@/app/types/Product';
 import CookieSelectTable from '@/components/order/CookieSelectTable';
 import ProductDetailView from '@/components/order/view/ProductDetailView';
 import ProductSelectView from '@/components/order/view/ProductSelectView';
-import { QuantitySelectorProvider } from '@/app/context/RequiredOptionContext';
+import { QuantitySelectorProvider } from '@/app/context/QuantitySelectorContext';
 
 function Page() {
     const [product, setProduct] = useState<ProductProps>();
@@ -47,7 +47,9 @@ function Page() {
                     {product?.has_option ? 
                         <ProductSelectView requiredOptionCount={product.required_option_count}>
                             <QuantitySelectorProvider>
-                                <CookieSelectTable requiredOptionCount={product.required_option_count}/>
+                                <CookieSelectTable 
+                                    requiredOptionCount={product.required_option_count}
+                                    price={product.price}/>
                             </QuantitySelectorProvider>
                         </ProductSelectView>
                         : <ProductDetailView product={product} isSoldOut={isSoldOut} />

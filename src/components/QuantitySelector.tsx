@@ -17,22 +17,24 @@ function QuantitySelector({
 }: QuantitySelectorProps) {
     const [count, setCount] = useState(minimum);
 
-    useEffect(() => {
-        onChange?.(count)
-    }, [count]);
+    // useEffect(() => {
+    //     onChange?.(count)
+    // }, [count]);
 
-    const countUp = () => {
+    const increase = () => {
         if(isDisabled) return;
         setCount(prev => {
             const newCount = Math.min(prev + 1, maximum);
+            onChange?.(newCount);
             return newCount;
         });
     };
 
-    const countDown = () => {
+    const decrease = () => {
         if(isDisabled) return;
         setCount(prev => {
             const newCount = Math.max(minimum, prev-1);
+            onChange?.(newCount);
             return newCount;
         });
     };
@@ -47,7 +49,7 @@ function QuantitySelector({
             
             <button className={`text-2xl cursor-pointer
                         ${isAtMin || isDisabled? "text-gray-400" : "text-black"}`}
-                    onClick={countDown}
+                    onClick={decrease}
                     disabled={isAtMin}>
                 -
             </button>
@@ -55,8 +57,9 @@ function QuantitySelector({
             <p>{count}</p>
             
             <button className={`text-2xl cursor-pointer ${isAtMax || isDisabled ? "text-gray-400" : "text-black"}`}
-                    onClick={countUp}
-                    disabled={isAtMax}>
+                    onClick={increase}
+                    disabled={isAtMax}
+                    >
                 +
             </button>
         </div>

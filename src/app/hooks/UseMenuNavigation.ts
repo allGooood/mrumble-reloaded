@@ -15,8 +15,14 @@ export const useMenuNavigation = () => {
         router.push("/");
     }
 
+    const goLogin = () => {
+        menu.close();
+        router.push("/login");
+    }
+
     return { 
         goOrder, 
-        goHome 
+        goHome,
+        goLogin
     };
 }

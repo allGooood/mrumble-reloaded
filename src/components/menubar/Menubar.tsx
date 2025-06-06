@@ -53,7 +53,9 @@ function Menubar() {
                     <div className="transition-colors
                                 duration-100
                                 hover:text-[#FFB9CD]
-                                cursor-pointer">
+                                cursor-pointer"
+                        onClick={menuNavi.goLogin}
+                    >
                                     Sign in
                     </div>
                     <LuCircleX onClick={menu.close} className="cursor-pointer" />

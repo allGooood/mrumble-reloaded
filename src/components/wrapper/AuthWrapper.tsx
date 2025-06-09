@@ -1,13 +1,13 @@
+'use client';
+
 import Button from '@/components/Button';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from "../../../firebase"
-import { FirebaseError } from 'firebase/app';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
-import { useForm } from "react-hook-form";
-import Image from 'next/image';
-import Input from '@/components/auth/Input';
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { auth, signIn } from "../../../firebase"
 import React from 'react';
+import { FcGoogle } from "react-icons/fc";
+import { useMenuNavigation } from '@/app/hooks/UseMenuNavigation';
+import useUserStore from '@/app/stores/useUserStore';
+
 
 interface AuthWrapperProps{
     onSubmit: (e: React.BaseSyntheticEvent) => Promise<void>;
@@ -20,6 +20,22 @@ function AuthWrapper({
     children,
     title,
 }: AuthWrapperProps) {
+    const menuNavi = useMenuNavigation();
+    const {setUser} = useUserStore();
+
+    const onClick = async() => {
+        try{
+            const provider = new GoogleAuthProvider();
+            const result = await signInWithPopup(auth, provider);
+            const user = await signIn(result.user);
+            setUser(user);
+
+            menuNavi.goHome();
+            
+        }catch(error){
+            console.error(error);
+        }
+    }
 
     return (
         <div className="bg-[#FFB9CD]
@@ -48,7 +64,12 @@ function AuthWrapper({
                             {children}
                         </form>
 
-                        {/* <Button>Continue with Google</Button> */}
+                        <Button className="flex items-center justify-center relative text-lg py-[5px] mt-[25px]" 
+                                variant="outline"
+                                onClick={onClick}>
+                            <FcGoogle className="absolute top-2 left-4 size-6" />
+                            Continue with Google
+                        </Button>
                     </div>
 
                     <p className="pt-[15px] text-sm italic text-gray-500 font-normal text-center">By proceeding you agree to our Terms and Conditions and confirm you have read and understand our Privacy policy</p>

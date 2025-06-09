@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "../components/navbar/Navbar";
@@ -9,7 +10,6 @@ export const metadata: Metadata = {
   description: "Crumbl reloaded by MK",
 };
 
-
 const font = Rubik({
   subsets: ['latin']
 })
@@ -19,6 +19,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <head>

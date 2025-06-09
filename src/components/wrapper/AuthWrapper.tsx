@@ -2,23 +2,26 @@
 
 import Button from '@/components/Button';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth, signIn } from "../../../firebase"
-import React from 'react';
+import { auth, convertUser } from "../../../firebase"
+import React, { useEffect, useState } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { useMenuNavigation } from '@/app/hooks/UseMenuNavigation';
 import useUserStore from '@/app/stores/useUserStore';
+import LoadingOverlay from '../auth/LoadingOverlay';
 
 
 interface AuthWrapperProps{
     onSubmit: (e: React.BaseSyntheticEvent) => Promise<void>;
     children: React.ReactNode;
     title: string,
+    isLoading?: boolean,
 };
 
 function AuthWrapper({
     onSubmit,
     children,
     title,
+    isLoading = false
 }: AuthWrapperProps) {
     const menuNavi = useMenuNavigation();
     const {setUser} = useUserStore();
@@ -27,7 +30,7 @@ function AuthWrapper({
         try{
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
-            const user = await signIn(result.user);
+            const user = await convertUser(result.user);
             setUser(user);
 
             menuNavi.goHome();
@@ -39,14 +42,15 @@ function AuthWrapper({
 
     return (
         <div className="bg-[#FFB9CD]
-                        fixed
-                        h-screen
-                        w-full
-                        z-30
-                        flex 
-                        items-center
-                        justify-center
+        fixed
+        h-screen
+        w-full
+        z-30
+        flex 
+        items-center
+        justify-center
         ">
+            {isLoading && <LoadingOverlay />}
             <div className="w-[70vw]">
                 
                 <div className="bg-white w-[25vw] h-[60vh] rounded-2xl px-[30px] py-[40px] z-30">

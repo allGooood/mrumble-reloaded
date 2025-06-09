@@ -1,9 +1,9 @@
 'use client';
 
 import Button from '@/components/Button';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, signIn } from "../../../firebase"
+import { auth, convertUser } from "../../../firebase"
 import { FirebaseError } from 'firebase/app';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -19,6 +19,7 @@ import useUserStore from '../stores/useUserStore';
 function Page() {
     const menuNavi = useMenuNavigation();
     const {setUser} = useUserStore();
+    const [isLoading, setLoading] = useState(false);
 
     const {register, handleSubmit, formState: { errors, isSubmitting }} = useForm<FormData>({
         resolver: yupResolver(loginSchema)
@@ -26,10 +27,11 @@ function Page() {
 
     const onSubmit = async(data: FormData) => {
         const {email, password} = data;
+        setLoading(true);
 
         try{
             const credentials = await signInWithEmailAndPassword(auth, email, password);
-            const user = await signIn(credentials.user);
+            const user = await convertUser(credentials.user);
             setUser(user);
 
             menuNavi.goHome();
@@ -38,12 +40,15 @@ function Page() {
             if(error instanceof FirebaseError){
                 alert(error.message);
             }
+        }finally{
+            setLoading(false);
         }
     }
 
     return (
         <AuthWrapper onSubmit={handleSubmit(onSubmit)}
-                    title="Log In">
+                    title="Log In"
+                    isLoading={isLoading}>
             <Input type="text" placeholder="Email" register={register('email')} error={errors.email}/>
             <Input type="password" placeholder="Password" register={register('password')} error={errors.password}/>
             <Button type="submit" className="text-lg py-[10px] mt-[20px] w-full">{isSubmitting ? "Loading..." : "Log In"}</Button>

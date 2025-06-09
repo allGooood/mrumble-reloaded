@@ -2,22 +2,26 @@
 import NationalFlavors from "../components/main/NationalFlavors";
 import { useEffect } from "react";
 import useUserStore from "./stores/useUserStore";
-import { auth } from "../../firebase";
+import { auth, convertUser } from "../../firebase";
 
 export default function Home() {
-  const { user, setUser } = useUserStore();
+  const { setUser } = useUserStore();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if(user){
-        // setUser(user);
-        console.log(user);
-      }else{
-        setUser(null);
-      }
-      return () => unsubscribe();
+      const processUser = async () => {
+        if (user) {
+          setUser(await convertUser(user));
+          console.log(user);
+        } else {
+          setUser(null);
+        }
+      };
+      
+      processUser();
     });
-    console.log(user);
+    
+    return () => unsubscribe();
   }, []);
 
   return (

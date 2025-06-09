@@ -5,10 +5,14 @@ import { useEffect } from "react";
 import { LuCircleX } from "react-icons/lu";
 import MenubarItem from "./MenubarItem";
 import { useMenuNavigation } from "@/app/hooks/UseMenuNavigation";
+import useUserStore from "@/app/stores/useUserStore";
+import { signOut } from "firebase/auth";
+import { auth } from "../../../firebase";
 
 function Menubar() {
     const menu = useMenuStore();
     const menuNavi = useMenuNavigation();
+    const { user } = useUserStore();
 
     useEffect(() => {
         if(menu.isOpen){
@@ -19,6 +23,10 @@ function Menubar() {
     }, [menu.isOpen]);
 
     if(!menu.isOpen) return null;
+
+    const logOut = async() => {
+        await signOut(auth);
+    }
     
     return (
         <>
@@ -54,9 +62,9 @@ function Menubar() {
                                 duration-100
                                 hover:text-[#FFB9CD]
                                 cursor-pointer"
-                        onClick={menuNavi.goLogin}
+                        onClick={user ? logOut : menuNavi.goLogin}
                     >
-                                    Sign in
+                        {user ? "Sign Out" : "Sign in"}
                     </div>
                     <LuCircleX onClick={menu.close} className="cursor-pointer" />
                 </div>

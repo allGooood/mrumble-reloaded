@@ -22,7 +22,7 @@ const app = initializeApp(firebaseConfig);
 // export const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 
-export const signIn = async(result: User) => {
+export const convertUser = async(result: User) => {
   console.log(result);
   const user =  {
       uid: result.uid,

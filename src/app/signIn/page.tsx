@@ -9,13 +9,15 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import Image from 'next/image';
 import Input from '@/components/auth/Input';
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import AuthWrapper from '@/components/wrapper/AuthWrapper';
 import { useMenuNavigation } from '../hooks/UseMenuNavigation';
 
 function Page() {
     const menuNavi = useMenuNavigation();
+    const [isLoading, setLoading] = useState(false);
+
 
     const {register, handleSubmit, formState: { errors, isSubmitting }} = useForm<FormData>({
         resolver: yupResolver(formSchema)
@@ -23,6 +25,7 @@ function Page() {
 
     const onSubmit = async(data: FormData) => {
         const {name, email, password} = data;
+        setLoading(true);
 
         try{
             const credentials = await createUserWithEmailAndPassword(auth, email, password);
@@ -37,12 +40,15 @@ function Page() {
             if(error instanceof FirebaseError){
                 alert(error.message);
             }
+        }finally{
+            setLoading(false);
         }
     }
 
     return (
         <AuthWrapper onSubmit={handleSubmit(onSubmit)}
-                    title="Sign In">
+                    title="Sign In"
+                    isLoading={isLoading}>
             <Input type="text" placeholder="First & Last Name" register={register('name')} error={errors.name}/>
             <Input type="text" placeholder="Email" register={register('email')} error={errors.email}/>
             <Input type="password" placeholder="Password" register={register('password')} error={errors.password}/>

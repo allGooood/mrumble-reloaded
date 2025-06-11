@@ -1,5 +1,5 @@
 import React from 'react';
-import QuantitySelector from '../../QuantitySelector';
+import QuantitySelectorOld from '../../QuantitySelectorOld';
 import Button from '../../Button';
 
 interface ProductProps{
@@ -43,7 +43,7 @@ function ProductDetailView({product
 
             {!isSoldOut && (
                 <div className="mt-[20px] justify-between flex gap-5 h-[45px]">
-                    <QuantitySelector />
+                    <QuantitySelectorOld />
                         <Button className="text-[18px]
                                             font-medium
                                             py-[15px]

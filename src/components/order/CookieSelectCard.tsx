@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useCallback } from 'react';
-import QuantitySelector from '../QuantitySelector';
+import React, { useCallback, useEffect, useState } from 'react';
+import QuantitySelectorOld from '../QuantitySelectorOld';
 import Image from 'next/image';
 import { CookieProps } from '@/app/types/Cookie';
 import { QuantitySelectorProvider, useQuantitySelectorContext } from '@/app/context/QuantitySelectorContext';
+import QuantitySelector from '../QuantitySelector';
 
 
 function CookieSelectCard({
@@ -21,12 +22,26 @@ function CookieSelectCard({
 }: CookieProps & { requiredOptionCount: number; totalSelected: number }) {
 
     const context = useQuantitySelectorContext();
-    const isSelected = (context?.getQuantity(JSON.stringify(id)) ?? 0) > 0;
-    const isDisabled = totalSelected >= requiredOptionCount && !isSelected;
-    const disableIncrement = totalSelected >= requiredOptionCount && isSelected;
 
-    const handleChange = (count: number) => {
-        context?.setQuantity(JSON.stringify(id), count);
+    const idStr = JSON.stringify(id);
+
+    const minimum = 0;
+    const maximum = 10;
+    const value = context?.getQuantity(idStr) ?? 0;
+    const isSelected = value > 0;
+    const plusDisabled = totalSelected >= requiredOptionCount;
+    const minusDisabled = totalSelected >= requiredOptionCount && !isSelected;
+
+    const onPlus = () => {
+        if (value <= maximum) {
+            context?.setQuantity(idStr, value + 1);
+        }
+    }
+
+    const onMinus = () => {
+        if (value >= minimum) {
+            context?.setQuantity(idStr, value - 1);
+        }
     };
 
     return (
@@ -52,10 +67,13 @@ function CookieSelectCard({
 
             <div className="h-[40px]">
                 <QuantitySelector 
-                    minimum={0}
-                    onChange={handleChange}
-                    isDisabled={isDisabled}
-                    disableIncrement={disableIncrement} />
+                    minimun={minimum}
+                    onPlus={onPlus}
+                    onMinus={onMinus}
+                    value={value}
+                    plusDisabled={plusDisabled}
+                    minusDisabled={minusDisabled}
+                />
             </div>
         </div>
     );

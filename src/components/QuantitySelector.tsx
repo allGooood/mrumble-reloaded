@@ -1,69 +1,53 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react'
 
 interface QuantitySelectorProps {
-    minimum?: number;
+    minimun?: number;
     maximum?: number;
-    onChange?: (count: number) => void;
-    isDisabled?: boolean;
-    disableIncrement?: boolean;
-  }
+    plusDisabled?: boolean;
+    minusDisabled?: boolean;
+    onPlus?: () => void;
+    onMinus?: () => void;
+    value: number;
+}
 
-function QuantitySelector({ 
-    minimum = 1
-    , onChange
-    , isDisabled = false 
-    , maximum = 10
-    , disableIncrement = false
-}: QuantitySelectorProps) {
-    const [count, setCount] = useState(minimum);
+const QuantitySelector = ({
+    minimun = 1,
+    maximum = 10,
+    // isDisabled = false,
+    plusDisabled = false,
+    minusDisabled = false,
+    onPlus,
+    onMinus,
+    value,
+}: QuantitySelectorProps) => {
 
-    // useEffect(() => {
-    //     onChange?.(count)
-    // }, [count]);
+    const isAtMin = value <= minimun;
+    const isAtMax = value >= maximum;
+    const isDisabled = plusDisabled && minusDisabled;
 
-    const increase = () => {
-        if(isDisabled) return;
-        setCount(prev => {
-            const newCount = Math.min(prev + 1, maximum);
-            onChange?.(newCount);
-            return newCount;
-        });
-    };
-
-    const decrease = () => {
-        if(isDisabled) return;
-        setCount(prev => {
-            const newCount = Math.max(minimum, prev-1);
-            onChange?.(newCount);
-            return newCount;
-        });
-    };
-
-    const isAtMin = count <= minimum;
-    const isAtMax = count >= maximum || disableIncrement;
-
-    return (
-        <div className={`inline-flex items-center justify-between rounded-full border-[1px] border-gray-200 
+  return (
+    <div className={`inline-flex items-center justify-between rounded-full border-[1px] border-gray-200 
                         min-w-[110px] min-h-[50px] w-[150px] 2xl:w-[178px] h-full p-5
                     ${isDisabled ? "opacity-50 pointer-events-none" : ""}`}>
             
             <button className={`text-2xl cursor-pointer
-                        ${isAtMin || isDisabled? "text-gray-400" : "text-black"}`}
-                    onClick={decrease}
-                    disabled={isAtMin}>
+                        ${isAtMin || minusDisabled? "text-gray-400" : "text-black"}`}
+                    onClick={onMinus}
+                    disabled={isAtMin || minusDisabled}>
                 -
             </button>
 
-            <p>{count}</p>
+            <p>{value}</p>
             
-            <button className={`text-2xl cursor-pointer ${isAtMax || isDisabled ? "text-gray-400" : "text-black"}`}
-                    onClick={increase}
-                    disabled={isAtMax}
+            <button className={`text-2xl cursor-pointer 
+                        ${isAtMax || plusDisabled ? "text-gray-400" : "text-black"}`}
+                    onClick={onPlus}
+                    disabled={isAtMax || plusDisabled}
                     >
                 +
             </button>
         </div>
-    );
+  )
 }
 
-export default QuantitySelector;
+export default QuantitySelector

@@ -5,7 +5,7 @@ import axios from 'axios';
 import Image from 'next/image';
 import { CookieProps } from '@/app/types/Cookie';
 import { useQuantitySelectorContext } from '@/app/context/QuantitySelectorContext';
-import QuantitySelector from '../QuantitySelector';
+import QuantitySelectorOld from '../QuantitySelectorOld';
 
 interface CookieSelectTableProps{
     requiredOptionCount: number,
@@ -22,7 +22,7 @@ function CookieSelectTable({
     const context = useQuantitySelectorContext();
     const totalSelected = context?.total ?? 0;
     const remainRequiredOptionCount = Math.max(0, requiredOptionCount - totalSelected);
-    const tatalPrice = price;
+    const totalPrice = price;
 
     
     useEffect(() => {
@@ -33,54 +33,16 @@ function CookieSelectTable({
         });
     }, []);
     
-    const CookieSelectCard = ({
-        id,
-        image_url,
-        cookie_name,
-        calories
-    }: CookieProps) => {
-        const isSelected = (context?.getQuantity(JSON.stringify(id)) ?? 0) > 0;
-        const isDisabled = totalSelected >= requiredOptionCount && !isSelected;
-
-        const handleChange = (count: number) => {
-            console.log("handleChange");
-            context?.setQuantity(JSON.stringify(id), count);
-        };
-
-        return (
-            <div className="flex justify-between border-b border-gray-200 py-[10px]">
-                <div className="flex flex-row">
-                    <div className="w-[50px] h-[50px] relative">
-                        <Image className="object-cover"
-                            src={`/cookies/${image_url}`} alt="" fill />
-                    </div>
-                    <div className="ml-[10px] flex flex-col justify-center">
-                        <p className="font-semibold leading-[20px]">{cookie_name}</p>
-                        <p className="leading-[16px] text-gray-500 text-sm">{calories} cal</p>
-                    </div>
-                </div>
-
-                <div className="h-[40px]">
-                    <QuantitySelector
-                        minimum={0}
-                        onChange={handleChange}
-                        isDisabled={isDisabled}
-                    />
-                </div>
-            </div>
-        );
-    };
-    
     return (
         <>
             <div className="flex flex-col">
                 {cookies.map(cookie => (
-                    <CookieSelectCard key={cookie.id} {...cookie} />
-                    // <CookieSelectCard key={cookie.id}
-                    //                 {...cookie}
-                    //                 requiredOptionCount={requiredOptionCount}
-                    //                 totalSelected={totalSelected}
-                    // />
+                    // <CookieSelectCard key={cookie.id} {...cookie} />
+                    <CookieSelectCard key={cookie.id}
+                                    {...cookie}
+                                    requiredOptionCount={requiredOptionCount}
+                                    totalSelected={totalSelected}
+                    />
                 ))}
             </div>
             <div className="flex flex-row justify-end pt-[50px]">
@@ -99,7 +61,7 @@ function CookieSelectTable({
                                         items-center"
                     >
                         <p>Add {remainRequiredOptionCount} more</p>
-                        <p>$ {tatalPrice}</p>
+                        <p>$ {totalPrice}</p>
                     </Button>
                 </div>
             </div>

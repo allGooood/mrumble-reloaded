@@ -8,6 +8,8 @@ import { FcGoogle } from "react-icons/fc";
 import { useMenuNavigation } from '@/app/hooks/UseMenuNavigation';
 import useUserStore from '@/app/stores/useUserStore';
 import LoadingOverlay from '../auth/LoadingOverlay';
+import Image from 'next/image';
+import axios from 'axios';
 
 
 interface AuthWrapperProps{
@@ -26,12 +28,17 @@ function AuthWrapper({
     const menuNavi = useMenuNavigation();
     const {setUser} = useUserStore();
 
-    const onClick = async() => {
+    const handleOAuth = async() => {
         try{
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
             const user = await convertUser(result.user);
             setUser(user);
+
+            const res = await axios.get(`http://localhost:4000/users/${user.email}`);
+            if(!res.data.duplicated){
+                await axios.post("http://localhost:4000/users", user);
+            }
 
             menuNavi.goHome();
             
@@ -51,12 +58,12 @@ function AuthWrapper({
         justify-center
         ">
             {isLoading && <LoadingOverlay />}
-            <div className="w-[70vw]">
+            <div className="w-[70vw] flex">
                 
-                <div className="bg-white w-[25vw] h-[60vh] rounded-2xl px-[30px] py-[40px] z-30">
+                <div className="bg-white w-[25vw] h-[65vh] rounded-2xl px-[30px] py-[40px] z-30">
                     <div className="flex flex-col items-center justify-center pb-[30px]">
                         <p className="text-5xl font-bold">{title}</p>
-                        {/* <p>We&apos;ll text you a confirmation code to get started</p> */}
+                        {/* <p>We&apos;ll send you a confirmation code to get started</p> */}
                     </div>
 
                     <div className="border-y
@@ -70,7 +77,7 @@ function AuthWrapper({
 
                         <Button className="flex items-center justify-center relative text-lg py-[5px] mt-[25px]" 
                                 variant="outline"
-                                onClick={onClick}>
+                                onClick={handleOAuth}>
                             <FcGoogle className="absolute top-2 left-4 size-6" />
                             Continue with Google
                         </Button>
@@ -79,9 +86,9 @@ function AuthWrapper({
                     <p className="pt-[15px] text-sm italic text-gray-500 font-normal text-center">By proceeding you agree to our Terms and Conditions and confirm you have read and understand our Privacy policy</p>
                 </div>
 
-                {/* <div className="top-1/2 transform -translate-y-1/2 z-5">
+                <div className="absolute top-1/2 transform -translate-y-1/2 z-5">
                     <Image className="object-contain max-h-[503px]" src="/illustrationSkateboardCookie.60f85d23.png" alt="" width={4096} height={2648}/>
-                </div> */}
+                </div>
             </div>
         </div>
     );

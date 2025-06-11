@@ -14,20 +14,19 @@ import Link from 'next/link';
 import AuthWrapper from '@/components/wrapper/AuthWrapper';
 import { useMenuNavigation } from '../hooks/UseMenuNavigation';
 import useUserStore from '../stores/useUserStore';
-
+import axios from 'axios';
 
 function Page() {
     const menuNavi = useMenuNavigation();
     const {setUser} = useUserStore();
-    const [isLoading, setLoading] = useState(false);
 
     const {register, handleSubmit, formState: { errors, isSubmitting }} = useForm<FormData>({
         resolver: yupResolver(loginSchema)
+        
     });
 
     const onSubmit = async(data: FormData) => {
         const {email, password} = data;
-        setLoading(true);
 
         try{
             const credentials = await signInWithEmailAndPassword(auth, email, password);
@@ -40,21 +39,19 @@ function Page() {
             if(error instanceof FirebaseError){
                 alert(error.message);
             }
-        }finally{
-            setLoading(false);
         }
     }
 
     return (
         <AuthWrapper onSubmit={handleSubmit(onSubmit)}
-                    title="Log In"
-                    isLoading={isLoading}>
+                    title="Sign In"
+                    isLoading={isSubmitting}>
             <Input type="text" placeholder="Email" register={register('email')} error={errors.email}/>
             <Input type="password" placeholder="Password" register={register('password')} error={errors.password}/>
-            <Button type="submit" className="text-lg py-[10px] mt-[20px] w-full">{isSubmitting ? "Loading..." : "Log In"}</Button>
+            <Button type="submit" className="text-lg py-[10px] mt-[20px] w-full">Sign In</Button>
             <span className="pt-[15px]">Don&apos;t have an account? <Link 
-                                                                    className="underline text-blue-600 hover:text-blue-800" 
-                                                                    href="/signIn">Create one
+                                                                        className="underline text-blue-600 hover:text-blue-800" 
+                                                                        href="/signup">Create one
                                                                     </Link>
             </span>
         </AuthWrapper>

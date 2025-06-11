@@ -26,6 +26,7 @@ function Menubar() {
 
     const logOut = async() => {
         await signOut(auth);
+        
     }
     
     return (

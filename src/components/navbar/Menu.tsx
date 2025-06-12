@@ -16,7 +16,7 @@ function Menu() {
                         '>
             <CgMenuRight className="cursor-pointer scale-x-[-1]" onClick={menu.open} size={30}/>
             <div className="cursor-pointer" onClick={menu.open}>Menu</div>
-            <Menubar />
+            {/* <Menubar /> */}
         </div>
     );
 }

@@ -1,9 +1,16 @@
+'use client';
+
 import React from 'react';
 import Menu from './Menu';
 import Logo from './Logo';
 import Order from './Order';
+import { usePathname } from 'next/navigation';
+import ViewCart from './ViewCart';
 
 function Navbar() {
+    const pathname = usePathname();
+    const isOrderPage = pathname.startsWith("/order");
+
     return (
         <div className="bg-[#FFB9CD]
                         flex 
@@ -22,7 +29,7 @@ function Navbar() {
             
             <Menu />
             <Logo />
-            <Order />
+            {isOrderPage ? <ViewCart /> : <Order />}
         </div>
     );
 }

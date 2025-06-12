@@ -29,8 +29,8 @@ function CookieSelectCard({
     const maximum = 10;
     const value = context?.getQuantity(idStr) ?? 0;
     const isSelected = value > 0;
-    const plusDisabled = totalSelected >= requiredOptionCount;
-    const minusDisabled = totalSelected >= requiredOptionCount && !isSelected;
+    const disablePlus = totalSelected >= requiredOptionCount;
+    const disableMinus = totalSelected >= requiredOptionCount && !isSelected;
 
     const onPlus = () => {
         if (value <= maximum) {
@@ -71,8 +71,8 @@ function CookieSelectCard({
                     onPlus={onPlus}
                     onMinus={onMinus}
                     value={value}
-                    plusDisabled={plusDisabled}
-                    minusDisabled={minusDisabled}
+                    disablePlus={disablePlus}
+                    disableMinus={disableMinus}
                 />
             </div>
         </div>

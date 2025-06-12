@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 interface QuantitySelectorProps {
     minimun?: number;
     maximum?: number;
-    plusDisabled?: boolean;
-    minusDisabled?: boolean;
+    disablePlus?: boolean;
+    disableMinus?: boolean;
     onPlus?: () => void;
     onMinus?: () => void;
     value: number;
@@ -14,8 +14,8 @@ const QuantitySelector = ({
     minimun = 1,
     maximum = 10,
     // isDisabled = false,
-    plusDisabled = false,
-    minusDisabled = false,
+    disablePlus: plusDisabled = false,
+    disableMinus: minusDisabled = false,
     onPlus,
     onMinus,
     value,

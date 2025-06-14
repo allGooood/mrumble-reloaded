@@ -27,7 +27,11 @@ function Page() {
 
         try{
             const res = await axios.get(`http://localhost:4000/users/${email}`);
-            if(res.data.duplicated){
+            // if(res.data.duplicated){
+            //     alert("Email already exists"); 
+            //     return;
+            // }
+            if(!res.data.user === null){
                 alert("Email already exists"); 
                 return;
             }

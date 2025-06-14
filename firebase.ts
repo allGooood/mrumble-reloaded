@@ -25,6 +25,7 @@ export const auth = getAuth(app);
 export const convertUser = async(result: User) => {
   console.log(result);
   const user =  {
+      id:null,
       uid: result.uid,
       email: result.email,
       username: result.displayName,

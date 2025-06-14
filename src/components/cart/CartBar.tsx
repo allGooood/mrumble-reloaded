@@ -11,10 +11,9 @@ const CartBar = () => {
 
     useEffect(() => {
         document.body.style.overflow = cart.isOpen ? "hidden" : "";
-        console.log(cart.isOpen);
-      }, [cart.isOpen]);
+    }, [cart.isOpen]);
 
-      if(!cart.isOpen) return null;
+    if(!cart.isOpen) return null;
 
   return (
     <div>

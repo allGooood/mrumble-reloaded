@@ -64,7 +64,6 @@ function Page() {
             }));
 
             setProducts(sorted);
-            console.log(sorted);
         })
         .catch((err) => console.error(err))
     }, []);

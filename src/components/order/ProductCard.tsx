@@ -19,7 +19,8 @@ interface ProductProps{
     hasOption: boolean,
 }
 
-function ProductCard({id, 
+function ProductCard({
+        id, 
         category, 
         productName, 
         stock, 

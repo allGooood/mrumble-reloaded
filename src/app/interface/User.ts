@@ -1,5 +1,4 @@
-export type User = {
-    id: number | null,
+export interface User{
     uid: string,
     email: string | null,
     username: string | null,
@@ -7,4 +6,3 @@ export type User = {
     role?: "user",
     provider: string,
 }
-

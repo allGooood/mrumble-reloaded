@@ -3,6 +3,9 @@ import NationalFlavors from "../components/main/NationalFlavors";
 import { useEffect } from "react";
 import useUserStore from "./stores/useUserStore";
 import { auth, convertUser } from "../../firebase";
+import toast, { Toaster } from "react-hot-toast";
+import Button from "@/components/Button";
+import ToasterProvider from "./libs/ToasterProvider";
 
 export default function Home() {
   const { setUser } = useUserStore();
@@ -24,11 +27,14 @@ export default function Home() {
     return () => unsubscribe();
   }, []);
 
+  const handleClick = () => toast("Toast!");
+
   return (
     <div className="flex
                     justify-center
     ">
       <NationalFlavors />
+      <ToasterProvider />
       {/* <Footer /> */}
     </div>
   );

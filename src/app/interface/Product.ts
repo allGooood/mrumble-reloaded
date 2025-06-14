@@ -1,4 +1,4 @@
-export type Product = {
+export interface ProductProps {
     id: number;
     category: string;
     product_name: string;
@@ -10,4 +10,13 @@ export type Product = {
     sku: string;
     has_option: boolean;
     required_option_count: number;
-}
+  }
+  
+  export interface ProductGroup {
+    category: string;
+    items: ProductProps[];
+  }
+
+  export interface Product{
+    product: ProductProps;
+  }

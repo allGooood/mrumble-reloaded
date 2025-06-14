@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
-import QuantitySelectorOld from '../QuantitySelectorOld';
+import React, {  } from 'react';
 import Image from 'next/image';
-import { CookieProps } from '@/app/types/Cookie';
-import { QuantitySelectorProvider, useQuantitySelectorContext } from '@/app/context/QuantitySelectorContext';
+import { CookieProps } from '@/app/interface/Cookie';
+import { useQuantitySelectorContext } from '@/app/context/QuantitySelectorContext';
 import QuantitySelector from '../QuantitySelector';
 
 

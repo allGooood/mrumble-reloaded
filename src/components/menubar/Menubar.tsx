@@ -8,6 +8,7 @@ import { useMenuNavigation } from "@/app/hooks/UseMenuNavigation";
 import useUserStore from "@/app/stores/useUserStore";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
+import toast from "react-hot-toast";
 
 function Menubar() {
     const menu = useMenuStore();
@@ -26,8 +27,9 @@ function Menubar() {
 
     const logOut = async() => {
         await signOut(auth);
-        
     }
+
+    const handleClick = () => toast("Coming soon :)");
     
     return (
         <div>
@@ -79,9 +81,9 @@ function Menubar() {
                     ">
                         <MenubarItem onClick={menuNavi.goHome}>Home</MenubarItem>
                         <MenubarItem onClick={menuNavi.goOrder}>Order</MenubarItem>
-                        <MenubarItem onClick={() => {}}>Locations</MenubarItem>
-                        <MenubarItem onClick={() => {}}>Gift Cards</MenubarItem>
-                        <MenubarItem onClick={() => {}}>Merch</MenubarItem>
+                        <MenubarItem onClick={handleClick}>Locations</MenubarItem>
+                        <MenubarItem onClick={handleClick}>Gift Cards</MenubarItem>
+                        <MenubarItem onClick={handleClick}>Merch</MenubarItem>
                     </ul>
                 </nav>
             </div>

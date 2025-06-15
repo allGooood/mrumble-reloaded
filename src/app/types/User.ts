@@ -1,5 +1,5 @@
 export type User = {
-    id: number | null,
+    id?: number | null,
     uid: string,
     email: string | null,
     username: string | null,

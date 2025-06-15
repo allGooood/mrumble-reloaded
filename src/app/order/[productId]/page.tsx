@@ -7,14 +7,14 @@ import axios from 'axios';
 import { IMAGE_PATH } from '@/app/utils/constants';
 import SoldOutImage from '@/components/SoldOutImage';
 import Image from 'next/image';
-import { ProductProps } from '@/app/interface/Product';
 import CookieSelectTable from '@/components/order/CookieSelectTable';
 import ProductDetailView from '@/components/order/view/ProductDetailView';
 import ProductSelectView from '@/components/order/view/ProductSelectView';
 import { QuantitySelectorProvider } from '@/app/context/QuantitySelectorContext';
+import { Product } from '@/app/types/Product';
 
 function Page() {
-    const [product, setProduct] = useState<ProductProps>();
+    const [product, setProduct] = useState<Product>();
 
     const useParms = useParams();
     const productId = useParms?.productId;

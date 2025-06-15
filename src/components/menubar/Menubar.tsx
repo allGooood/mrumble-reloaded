@@ -13,20 +13,19 @@ import toast from "react-hot-toast";
 function Menubar() {
     const menu = useMenuStore();
     const menuNavi = useMenuNavigation();
-    const { user } = useUserStore();
+    const { user, setUser } = useUserStore();
 
     useEffect(() => {
-        if(menu.isOpen){
-            document.body.style.overflow = "hidden";
-        }else {
-            document.body.style.overflow = "";
-        }
+        document.body.style.overflow = menu.isOpen ? "hidden" : ""
     }, [menu.isOpen]);
 
     if(!menu.isOpen) return null;
 
     const logOut = async() => {
-        await signOut(auth);
+        await signOut(auth)
+        // .then(() => {
+        //     setUser(null);
+        // });
     }
 
     const handleClick = () => toast("Coming soon :)");

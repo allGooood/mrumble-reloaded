@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { CookieProps } from '@/app/interface/Cookie';
 import { useQuantitySelectorContext } from '@/app/context/QuantitySelectorContext';
 import QuantitySelector from '../QuantitySelector';
+import { CookieOption } from '@/app/types/CookieOption';
 
 
 function CookieSelectCard({
@@ -18,7 +19,7 @@ function CookieSelectCard({
     category,
     requiredOptionCount,
     totalSelected
-}: CookieProps & { requiredOptionCount: number; totalSelected: number }) {
+}: CookieOption & { requiredOptionCount: number; totalSelected: number }) {
 
     const context = useQuantitySelectorContext();
 

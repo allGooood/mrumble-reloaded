@@ -32,9 +32,8 @@ function Page() {
             const credentials = await signInWithEmailAndPassword(auth, email, password);
 
             const dbUser = (await axios.get(`http://localhost:4000/users/${email}`)).data.user;
-            const converted = await convertUser(credentials.user);
-            converted.id = dbUser.id;
-
+            console.log(dbUser?.id);
+            const converted = await convertUser(credentials.user, dbUser.id);
             
             setUser(converted);
             console.log(converted);

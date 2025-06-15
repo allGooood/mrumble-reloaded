@@ -10,6 +10,8 @@ import useUserStore from '@/app/stores/useUserStore';
 import LoadingOverlay from '../auth/LoadingOverlay';
 import Image from 'next/image';
 import axios from 'axios';
+import { signIn } from 'next-auth/react'
+
 
 
 interface AuthWrapperProps{
@@ -78,6 +80,7 @@ function AuthWrapper({
                         <Button className="flex items-center justify-center relative text-lg py-[5px] mt-[25px]" 
                                 variant="outline"
                                 onClick={handleOAuth}>
+                                {/* onClick={() => signIn('google')}> */}
                             <FcGoogle className="absolute top-2 left-4 size-6" />
                             Continue with Google
                         </Button>

@@ -6,10 +6,15 @@ import { CookieProps } from '@/app/interface/Cookie';
 import { useQuantitySelectorContext } from '@/app/context/QuantitySelectorContext';
 import { Product } from '@/app/types/Product';
 import useUserStore from '@/app/stores/useUserStore';
+import toast from 'react-hot-toast';
+import ToasterProvider from '@/app/libs/ToasterProvider';
+import { TOAST_ERROR } from '@/app/utils/constants';
+import { CookieOption } from '@/app/types/CookieOption';
+import useCartStore from '@/app/stores/useCartStore';
 
 interface CookieSelectTableProps{
     requiredOptionCount: number,
-    price: string
+    price: number
     product: Product
 }
 
@@ -19,13 +24,13 @@ function CookieSelectTable({
     product
 }: CookieSelectTableProps
 ) {
-    const [cookies, setCookies] = useState<CookieProps[]>([]);
+    const [cookies, setCookies] = useState<CookieOption[]>([]);
+    const { refreshCart } = useCartStore();
 
     const context = useQuantitySelectorContext();
     const totalSelected = context?.total ?? 0;
     const remainRequiredOptionCount = Math.max(0, requiredOptionCount - totalSelected);
     const totalPrice = price;
-    
     
     useEffect(() => {
         axios.get('http://localhost:4000/cookies')
@@ -37,36 +42,39 @@ function CookieSelectTable({
     
 
     const {user} = useUserStore();
+    const [isLoading, setLoading] = useState(false);
+
     const addToCart = async() => {
-        console.log("addToCart");
+        // if(!user){
+        //     toast.error(TOAST_ERROR);
+        // }
 
-        const userId = user?.id;
-
-    if (!userId) {
-        alert("로그인된 사용자 정보가 없습니다.");
-        return;
-    }
-        console.log(user);
+        const productId = JSON.stringify(product.id);
         const cartItem = {
-            "user_id" : user?.id, 
-            "product_id": product.id, 
-            "total_price": "122", 
-            "quantity": 2, 
-            "options": null
+            "user_id" : 11, 
+            "product_id": productId, 
+            "total_price": product.price, 
+            "quantity": 1, 
+            "options": context?.quantities,
         }
 
-        const result = await axios.post('http://localhost:4000/carts', cartItem);
-        //TODO: GET cart -> 카트 숫자 올리기(+버튼 애니메이션)
-        if(result.data.rowCount === 1){
-            alert("Added to cardt");
+        setLoading(true);
+        try {
+            await axios.post('http://localhost:4000/carts', cartItem);
+            toast.success("Successfully added to Cart !");
+            await refreshCart();
+        } catch (error) {
+            toast.error(TOAST_ERROR);
+        } finally {
+            setLoading(false);
         }
     };
     
     return (
         <>
+            <ToasterProvider />
             <div className="flex flex-col">
                 {cookies.map(cookie => (
-                    // <CookieSelectCard key={cookie.id} {...cookie} />
                     <CookieSelectCard key={cookie.id}
                                     {...cookie}
                                     requiredOptionCount={requiredOptionCount}
@@ -77,7 +85,7 @@ function CookieSelectTable({
             <div className="flex flex-row justify-end pt-[50px]">
                 {/* <SwitchToggle /> */}
                 <div className="h-[50px]">
-                    <Button className="text-[18px]
+                    <Button className={`text-[18px]
                                         font-normal
                                         py-[15px]
                                         h-full
@@ -86,7 +94,8 @@ function CookieSelectTable({
                                         flex
                                         flex-row
                                         justify-between
-                                        items-center"
+                                        items-center`}
+                            disabled={remainRequiredOptionCount === 0 ? false : true}
                             onClick={addToCart}
                     >
                         <p>Add {remainRequiredOptionCount} more</p>

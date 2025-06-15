@@ -1,30 +1,65 @@
-import React from 'react';
-import QuantitySelectorOld from '../../QuantitySelectorOld';
+import React, { useState } from 'react';
 import Button from '../../Button';
-
-interface ProductProps{
-    id: number,
-    category: string,
-    product_name: string,
-    stock: number,
-    price: string,
-    discount_percentage?: string,
-    image_url?: string,
-    description?: string,
-    sku: string,
-    has_option: boolean,
-}
+import ToasterProvider from '@/app/libs/ToasterProvider';
+import { TOAST_ERROR } from '@/app/utils/constants';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import QuantitySelector from '@/components/QuantitySelector';
+import { Product } from '@/app/types/Product';
+import LoadingOverlay from '@/components/auth/LoadingOverlay';
+import useCartStore from '@/app/stores/useCartStore';
 
 interface ProductDetailViewProps{
-    product?: ProductProps;
+    product?: Product;
     isSoldOut : boolean;
 }
 
 function ProductDetailView({product
     , isSoldOut
 }:ProductDetailViewProps) {
+    const [isLoading, setLoading] = useState(false);
+    const [value, setValue] = useState(1);
+    const { refreshCart } = useCartStore();
+
+    const onPlus = () => {
+        setValue(prev => prev + 1);
+    };
+
+    const onMinus = () => {
+        setValue(prev => prev - 1);
+    };
+
+
+    const addCart = async() => {
+        if(!product){
+            toast.error("Product is Null");
+            return;
+        }
+
+        const productId = JSON.stringify(product.id);
+        const cartItem = {
+            "user_id" : 11, 
+            "product_id": productId, 
+            "total_price": value * product.price, 
+            "quantity": value, 
+        }
+
+        setLoading(true);
+        try {
+            await axios.post('http://localhost:4000/carts', cartItem);
+            toast.success("Successfully added to Cart !");
+            await refreshCart();
+        } catch (error) {
+            toast.error(TOAST_ERROR);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="pt-[20px]">
+            {isLoading && <LoadingOverlay />}
+            <ToasterProvider />
             <p className="md:font-extrabold md:text-6xl font-medium text-2xl">
                 {product?.product_name}
             </p>
@@ -43,7 +78,8 @@ function ProductDetailView({product
 
             {!isSoldOut && (
                 <div className="mt-[20px] justify-between flex gap-5 h-[45px]">
-                    <QuantitySelectorOld />
+                    {/* <QuantitySelectorOld /> */}
+                    <QuantitySelector value={value} onPlus={onPlus} onMinus={onMinus}/>
                         <Button className="text-[18px]
                                             font-medium
                                             py-[15px]
@@ -52,7 +88,8 @@ function ProductDetailView({product
                                             h-full
                                             whitespace-nowrap
                                             flex
-                                            items-center">
+                                            items-center"
+                                onClick={addCart}>
                             Add to Bag
                         </Button>
                 </div>

@@ -1,16 +1,42 @@
-import { create } from 'zustand';
+import { create } from "zustand";
+import { Cart } from "../types/Cart";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-interface CartStore{
-    isOpen: boolean;
-    open: () => void;
-    close: () => void;
+interface CartState {
+    quantity: number;
+    setQuantity: (data: number) => void;
+
+    subtotal: number;
+    setSubtotal: (data: number) => void;
+
+    carts: Cart[];
+    setCarts: (data: Cart[]) => void;
+
+    refreshCart: () => Promise<void>;
 }
 
-const useCartStore = create<CartStore>((set) => ({
-    isOpen: false,
-    open: () => set({ isOpen: true}),
-    close: () => set({ isOpen: false}),
+const useCartStore = create<CartState>((set, get) => ({
+    quantity: 0,
+    setQuantity: (count: number) => set({ quantity: get().quantity + count}),
+    
+    subtotal: 0,
+    setSubtotal: (count: number) => set({subtotal: get().subtotal + count}),
 
+    carts: [],
+    setCarts: (data: Cart[]) => set({carts: data}),
+
+    refreshCart: async () => {
+        try {
+            const userId = 11; // TODO: Replace with actual user ID
+            const res = await axios.get(`http://localhost:4000/carts/${userId}`);
+            const rows = res.data;
+            set({ carts: rows });
+            set({ quantity: rows.reduce((total: number, next: Cart) => total + next.quantity, 0) });
+        } catch (error) {
+            toast.error("Failed to refresh cart");
+        }
+    },
 }));
 
-export default useCartStore
+export default useCartStore;

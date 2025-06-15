@@ -3,7 +3,7 @@ export type CookieOption = {
     cookie_name: string,
     sku: string,
     stock: number,
-    extra_charge: string,
+    extra_charge: number,
     calories: string,
     image_url: string,
     category: string,

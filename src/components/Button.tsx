@@ -18,8 +18,13 @@ function Button({children,
     disabled = false,
     className = ""
 } : ButtonProps) {
-    const baseStyle = "rounded-full cursor-pointer";
+    // const baseStyle = "rounded-full cursor-pointer";
 
+    const baseStyle = `rounded-full 
+                        ${disabled ? "bg-gray-200" : ""}
+                        ${disabled ? "cursor-auto" : "cursor-pointer"}
+                        `;
+    
     const variants = {
         primary: "bg-black text-white",
         secondary: "",

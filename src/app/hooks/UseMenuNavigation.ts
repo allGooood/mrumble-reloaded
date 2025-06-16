@@ -20,9 +20,14 @@ export const useMenuNavigation = () => {
         router.push("/login");
     }
 
+    const goCheckout = () => {
+        router.push("/checkout");
+    }
+
     return { 
         goOrder, 
         goHome,
-        goLogin
+        goLogin,
+        goCheckout
     };
 }

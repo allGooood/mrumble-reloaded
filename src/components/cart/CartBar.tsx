@@ -7,11 +7,14 @@ import { LuCircleX } from 'react-icons/lu';
 import useUserStore from '@/app/stores/useUserStore';
 import CartBarItem from './CartBarItem';
 import useCartStore from '@/app/stores/useCartStore';
+import { useRouter } from 'next/navigation';
+import { useMenuNavigation } from '@/app/hooks/UseMenuNavigation';
 
 const CartBar = () => {
     const cartModal = useCartModal();
     const {user} = useUserStore();
     const {carts, refreshCart, setQuantity, subtotal} = useCartStore();
+    const {goCheckout} = useMenuNavigation();
 
     useEffect(() => {
         refreshCart();
@@ -77,7 +80,10 @@ const CartBar = () => {
                 <p>Subtotal</p>
                 <p>${subtotal}</p>
             </div>
-            <Button className="w-full py-[15px] mt-[10px]">Check Out</Button>
+            <Button className="w-full py-[15px] mt-[10px]"
+                onClick={goCheckout}>
+                    Check Out
+            </Button>
         </div>
     </div>
   )

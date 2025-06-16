@@ -6,30 +6,16 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { TOAST_ERROR } from '@/app/utils/constants';
 import useCartStore from '@/app/stores/useCartStore';
+import { usePathname } from 'next/navigation';
 
 interface CartBarItemProps {
     item: Cart;
 }
 
 const CartBarItem = ({item}:CartBarItemProps) => {
+    const pathname = usePathname();
+    const isCheckoutPage = pathname.startsWith("/checkout");
     const {refreshCart} = useCartStore();
-
-    const handleOption = ((options: string|null) => {
-        if(!options) return null;
-
-        return options?.split(",")
-            .map((row: string) => (
-                <p key={row}>{row}</p>
-            ));
-    });
-
-    // const printOptions = (options: { [key: string]: number } | null) => {
-    //     if (!options) return null;
-      
-    //     return Object.entries(options).map(([name, count]) => (
-    //         <p key={name}>{count} {name}</p>
-    //     ));
-    //   };
 
     const printOptions = (options: string | null): JSX.Element[] | null => {
         if (!options) return null;
@@ -71,20 +57,28 @@ const CartBarItem = ({item}:CartBarItemProps) => {
 
   return (
     <>
-        <li className="flex flex-row border-b border-gray-400 pb-[10px]">
+        <li className="flex flex-row border-b border-gray-300 pb-[15px]">
             <div className="relative bg-[#FFB9CD] overflow-hidden w-[90px] h-[90px] rounded-lg shrink-0">
                 <Image className="object-cover" alt="cartItem" src={`/order/${item.product.image_url}`} fill />
             </div>
-            <div className="pl-[10px]">
+            <div className="pl-[10px] w-full">
                 <div className="flex flex-row justify-between h-[50px] mb-[15px]">
                     <div>
                         <p className="font-medium">{item.product.name}</p>
                         <p className="text-sm font-normal">${item.total_price}</p>
                     </div>
-                    <QuantitySelector 
-                        onPlus={() => handleQuantityChange(eachQuantity+1)} 
-                        onMinus={() => handleQuantityChange(eachQuantity-1)}
-                        value={eachQuantity} />
+
+                    {isCheckoutPage ? 
+                        (<div className="text-lg font-medium pr-[10px]">
+                            <span>Qty: {eachQuantity}</span>
+                        </div>) : 
+                        
+                        (<QuantitySelector 
+                            onPlus={() => handleQuantityChange(eachQuantity+1)} 
+                            onMinus={() => handleQuantityChange(eachQuantity-1)}
+                            value={eachQuantity} />)
+                    }
+
                 </div>
                 <div className="text-gray-400 text-sm font-normal">
                     {printOptions(item.product.options)}

@@ -11,7 +11,7 @@ import useCartStore from '@/app/stores/useCartStore';
 const CartBar = () => {
     const cartModal = useCartModal();
     const {user} = useUserStore();
-    const {carts, refreshCart, setQuantity} = useCartStore();
+    const {carts, refreshCart, setQuantity, subtotal} = useCartStore();
 
     useEffect(() => {
         refreshCart();
@@ -75,7 +75,7 @@ const CartBar = () => {
 
             <div className="flex justify-between">
                 <p>Subtotal</p>
-                <p>$33</p>
+                <p>${subtotal}</p>
             </div>
             <Button className="w-full py-[15px] mt-[10px]">Check Out</Button>
         </div>

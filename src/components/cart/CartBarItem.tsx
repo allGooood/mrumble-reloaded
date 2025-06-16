@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { JSX, useState } from 'react'
 import QuantitySelector from '../QuantitySelector'
 import { Cart } from '@/app/types/Cart'
 import Image from 'next/image';
@@ -22,6 +22,29 @@ const CartBarItem = ({item}:CartBarItemProps) => {
                 <p key={row}>{row}</p>
             ));
     });
+
+    // const printOptions = (options: { [key: string]: number } | null) => {
+    //     if (!options) return null;
+      
+    //     return Object.entries(options).map(([name, count]) => (
+    //         <p key={name}>{count} {name}</p>
+    //     ));
+    //   };
+
+    const printOptions = (options: string | null): JSX.Element[] | null => {
+        if (!options) return null;
+      
+        try {
+          const parsed = JSON.parse(options) as { [key: string]: number };
+          return Object.entries(parsed).map(([name, count], idx) => (
+            <p key={idx}>{count} {name}</p>
+          ));
+        } catch (error) {
+          console.error("Invalid JSON options:", options);
+          return null;
+        }
+      };
+
 
     const handleQuantityChange = async(newQty: number) => {
         if(newQty < 1) return;
@@ -64,7 +87,7 @@ const CartBarItem = ({item}:CartBarItemProps) => {
                         value={eachQuantity} />
                 </div>
                 <div className="text-gray-400 text-sm font-normal">
-                    {handleOption(item.product.options)}
+                    {printOptions(item.product.options)}
                 </div>
             </div>
         </li>

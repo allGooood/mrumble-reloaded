@@ -28,10 +28,20 @@ export const QuantitySelectorProvider = ({children}:{children: React.ReactNode})
         return quantities[id] ?? 0;
     };
 
-    const total = Object.values(quantities).reduce((a,b) => a+b, 0);
+    const total = Object.values(quantities)
+                    .reduce(
+                        (a,b) => a+b, 0
+                    );
 
     return (
-        <QuantitySelectorContext.Provider value={{quantities: quantities, setQuantity: setQuantity, getQuantity: getQuantity, total}}>
+        <QuantitySelectorContext.Provider 
+            value={{
+                    quantities: quantities, 
+                    setQuantity: setQuantity, 
+                    getQuantity: getQuantity, 
+                    total
+                }}
+        >
             {children}
         </QuantitySelectorContext.Provider>
     );

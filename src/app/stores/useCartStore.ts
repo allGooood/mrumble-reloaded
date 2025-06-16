@@ -8,7 +8,7 @@ interface CartState {
     setQuantity: (data: number) => void;
 
     subtotal: number;
-    setSubtotal: (data: number) => void;
+    // setSubtotal: (data: number) => void;
 
     carts: Cart[];
     setCarts: (data: Cart[]) => void;
@@ -21,7 +21,6 @@ const useCartStore = create<CartState>((set, get) => ({
     setQuantity: (count: number) => set({ quantity: get().quantity + count}),
     
     subtotal: 0,
-    setSubtotal: (count: number) => set({subtotal: get().subtotal + count}),
 
     carts: [],
     setCarts: (data: Cart[]) => set({carts: data}),
@@ -32,7 +31,15 @@ const useCartStore = create<CartState>((set, get) => ({
             const res = await axios.get(`http://localhost:4000/carts/${userId}`);
             const rows = res.data;
             set({ carts: rows });
-            set({ quantity: rows.reduce((total: number, next: Cart) => total + next.quantity, 0) });
+            set({ quantity: rows.reduce(
+              (total: number, next: Cart) => 
+                total + next.quantity, 0
+            )});
+            set({subtotal: rows.reduce(
+                  (total: number, next: Cart) =>
+                    total + Number(next.total_price), 0
+                )
+                .toFixed(2)});
         } catch (error) {
             toast.error("Failed to refresh cart");
         }

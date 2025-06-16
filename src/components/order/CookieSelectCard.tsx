@@ -18,8 +18,13 @@ function CookieSelectCard({
     image_url,
     category,
     requiredOptionCount,
-    totalSelected
-}: CookieOption & { requiredOptionCount: number; totalSelected: number }) {
+    totalSelected,
+    onSelected,
+}: CookieOption & { 
+    requiredOptionCount: number; 
+    totalSelected: number; 
+    onSelected: (name: string, count: number) => void 
+}) {
 
     const context = useQuantitySelectorContext();
 
@@ -34,13 +39,17 @@ function CookieSelectCard({
 
     const onPlus = () => {
         if (value <= maximum) {
-            context?.setQuantity(idStr, value + 1);
+            const newValue = value + 1;
+            context?.setQuantity(idStr, newValue);
+            onSelected(cookie_name, newValue);
         }
     }
 
     const onMinus = () => {
         if (value >= minimum) {
-            context?.setQuantity(idStr, value - 1);
+            const newValue = value - 1;
+            context?.setQuantity(idStr, newValue);
+            onSelected(cookie_name, newValue);
         }
     };
 

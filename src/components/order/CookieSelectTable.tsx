@@ -43,6 +43,19 @@ function CookieSelectTable({
 
     const {user} = useUserStore();
     const [isLoading, setLoading] = useState(false);
+    const [options, setOptions] = useState<{ [name: string]: number }>({});
+
+    const updateOptions = (name: string, count: number) => {
+        setOptions(prev => {
+            const updated = {...prev};
+            if(count === 0){
+                delete updated[name];
+            }else{
+                updated[name] = count;
+            }
+            return updated;
+        });
+    };
 
     const addToCart = async() => {
         // if(!user){
@@ -55,7 +68,8 @@ function CookieSelectTable({
             "product_id": productId, 
             "total_price": product.price, 
             "quantity": 1, 
-            "options": context?.quantities,
+            // "options": context?.quantities,
+            "options": options,
         }
 
         setLoading(true);
@@ -79,6 +93,7 @@ function CookieSelectTable({
                                     {...cookie}
                                     requiredOptionCount={requiredOptionCount}
                                     totalSelected={totalSelected}
+                                    onSelected={updateOptions}
                     />
                 ))}
             </div>

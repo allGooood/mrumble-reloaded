@@ -37,7 +37,7 @@ function ProductCard({
 
     const goDetail = (id : number) => {
         // router.push(`/order?productId=${id}`);
-        router.push(`/order/${id}`);
+        router.push(`/products/${id}`);
     };
 
     return (

@@ -7,12 +7,13 @@ import useCartStore from '@/app/stores/useCartStore';
 
 const ViewCart = () => {
     const {open} = useCartModal();
-    const {quantity} = useCartStore();
+    const {quantity, carts} = useCartStore();
 
 
   return (
     <>
-    <Button className="relative font-normal text-lg py-2.5 px-7 cursor-pointer flex flex-row items-center gap-3"
+    <Button className={`${carts.length === 0 && "invisible"}
+                        relative font-normal text-lg py-2.5 px-7 cursor-pointer flex flex-row items-center gap-3`}
             onClick={open}>
         <p className="bg-red-600 text-xs w-[16px] h-[16px] rounded-full absolute top-[8px] left-[20px]">{quantity}</p>
         <PiHandbagSimpleFill size={25} color="white"/>

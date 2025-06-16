@@ -11,7 +11,7 @@ function Order() {
         <>
             <Button className="py-2.5 px-7"
                 variant="primary"
-                onClick={menuNavi.goOrder}>
+                onClick={menuNavi.goProducts}>
                     Order Now
             </Button>
         </>

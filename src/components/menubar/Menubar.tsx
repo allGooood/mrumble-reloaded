@@ -79,7 +79,7 @@ function Menubar() {
                                     gap-y-15
                     ">
                         <MenubarItem onClick={menuNavi.goHome}>Home</MenubarItem>
-                        <MenubarItem onClick={menuNavi.goOrder}>Order</MenubarItem>
+                        <MenubarItem onClick={menuNavi.goProducts}>Order</MenubarItem>
                         <MenubarItem onClick={handleClick}>Locations</MenubarItem>
                         <MenubarItem onClick={handleClick}>Gift Cards</MenubarItem>
                         <MenubarItem onClick={handleClick}>Merch</MenubarItem>

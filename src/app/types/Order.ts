@@ -11,7 +11,8 @@ export type Order = {
     contact: string,
     state: string,
     order_type: string,
-    items: Item[]
+    items: Item[],
+    cart_ids: number[] | null, // 바로 주문하기 기능 시 : null
 }
 
 type Item = {

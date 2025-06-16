@@ -16,7 +16,7 @@ function CookieCard({
     cookie,
     isReversed
 }:CookieCardProps) {
-    const {goOrder} = useMenuNavigation();
+    const {goProducts} = useMenuNavigation();
 
     return (
         <div className="
@@ -65,7 +65,7 @@ function CookieCard({
                                 Learn More
                         </Button>
                         <Button className="px-8 py-2.5 group-hover:text-[#EBAC5A] transition duration-500" 
-                            onClick={goOrder}>
+                            onClick={goProducts}>
                                 Order Now
                         </Button>
                     </div>

@@ -5,9 +5,9 @@ export const useMenuNavigation = () => {
     const router = useRouter();
     const menu = useMenuStore();
 
-    const goOrder = () => {
+    const goProducts = () => {
         menu.close();
-        router.push("/order");
+        router.push("/products");
     }
 
     const goHome = () => {
@@ -25,7 +25,7 @@ export const useMenuNavigation = () => {
     }
 
     return { 
-        goOrder, 
+        goProducts, 
         goHome,
         goLogin,
         goCheckout

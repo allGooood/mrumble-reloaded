@@ -12,6 +12,14 @@ import toast from 'react-hot-toast';
 import { TOAST_ERROR } from '../utils/constants';
 import { useMenuNavigation } from '../hooks/UseMenuNavigation';
 
+
+
+const baseDiv = "border border-gray-300 rounded-2xl p-[30px]";
+const baseTitle = "text-4xl font-semibold";
+const baseHr = "my-[20px] border-gray-300";
+const baseInput = "border border-gray-300 rounded-xl w-full";
+
+
 const Page = () => {
     const {carts, subtotal} = useCartStore();
     const cartModal = useCartModal();
@@ -23,18 +31,13 @@ const Page = () => {
 
     const MAX_LENGTH = 150;
     const [textLength, setTextLength] = useState(MAX_LENGTH);
-
-    const baseDiv = "border border-gray-400 rounded-2xl p-[30px]";
-    const baseTitle = "text-4xl font-semibold";
-    const baseHr = "my-[20px] border-gray-300";
-    const baseInput = "border border-gray-400 rounded-xl w-full";
-
+    
     useEffect(() => {
         if(cartModal.isOpen){
             cartModal.close();
         }
     }, [cartModal])
-
+    
     useEffect(() => {
         const TAX_RATE = 0.12;
         const numericSubtotal = Number(subtotal);
@@ -59,6 +62,8 @@ const Page = () => {
                 options: item.product.options,
             }));
 
+            const cart_ids = carts.map(item => item.id);
+
             const order = {
                 user_id: userId,
                 tax: tax,
@@ -70,6 +75,7 @@ const Page = () => {
                 state: "ORDERED",
                 order_type: "PICK_UP",
                 items: items,
+                cart_ids: cart_ids,
             };
 
             await axios.post("http://localhost:4000/orders", order);

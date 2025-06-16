@@ -6,6 +6,7 @@ import Logo from './Logo';
 import Order from './Order';
 import { usePathname } from 'next/navigation';
 import ViewCart from './ViewCart';
+import useCartStore from '@/app/stores/useCartStore';
 
 function Navbar() {
     const pathname = usePathname();

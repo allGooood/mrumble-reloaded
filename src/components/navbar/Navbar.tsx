@@ -10,6 +10,16 @@ import ViewCart from './ViewCart';
 function Navbar() {
     const pathname = usePathname();
     const isOrderPage = pathname.startsWith("/order");
+    const isCheckoutPage = pathname.startsWith("/checkout");
+
+    let dynamicButton = null;
+    if(isOrderPage){
+        dynamicButton = <ViewCart />
+    }else if(isCheckoutPage){
+        dynamicButton = <div className="w-[120px]"></div>;
+    }else{
+        dynamicButton = <Order />
+    }
 
     return (
         <div className="bg-[#FFB9CD]
@@ -29,7 +39,7 @@ function Navbar() {
             
             <Menu />
             <Logo />
-            {isOrderPage ? <ViewCart /> : <Order />}
+            {dynamicButton}
         </div>
     );
 }

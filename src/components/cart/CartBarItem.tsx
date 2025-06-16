@@ -57,7 +57,7 @@ const CartBarItem = ({item}:CartBarItemProps) => {
 
   return (
     <>
-        <li className="flex flex-row border-b border-gray-300 pb-[15px]">
+        <li className="flex flex-row border-b border-gray-300 pb-[15px] last:border-b-0">
             <div className="relative bg-[#FFB9CD] overflow-hidden w-[90px] h-[90px] rounded-lg shrink-0">
                 <Image className="object-cover" alt="cartItem" src={`/order/${item.product.image_url}`} fill />
             </div>

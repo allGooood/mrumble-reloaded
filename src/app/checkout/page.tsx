@@ -1,14 +1,16 @@
 'use client';
 import CartBarItem from '@/components/cart/CartBarItem'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import useCartStore from '../stores/useCartStore'
 import Button from '@/components/Button';
 import Wrapper from '@/components/wrapper/Wrapper';
 import useCartModal from '../stores/useCartModal';
 
 const Page = () => {
-    const {carts} = useCartStore();
+    const {carts, subtotal} = useCartStore();
     const cartModal = useCartModal();
+    const [total, setTotal] = useState(0);
+    const [tax, setTax] = useState(0);
 
     const baseDiv = "border border-gray-400 rounded-2xl p-[30px]";
     const baseTitle = "text-4xl font-semibold";
@@ -20,6 +22,18 @@ const Page = () => {
             cartModal.close();
         }
     }, [cartModal])
+
+    useEffect(() => {
+        const TAX_RATE = 0.12;
+        const numericSubtotal = Number(subtotal);
+
+        const tax = Number((numericSubtotal * TAX_RATE).toFixed(2));
+        const total = Number((numericSubtotal + tax).toFixed(2));
+
+        setTax(tax);
+        setTotal(total);
+    }, [subtotal]);
+
 
   return (
     <Wrapper>
@@ -60,16 +74,16 @@ const Page = () => {
                     <div>
                         <div className="flex flex-row justify-between">
                             <span>Subtotal</span>
-                            <span>$97.51</span>
+                            <span>${subtotal}</span>
                         </div>
                         <div className="flex flex-row justify-between text-gray-400">
-                            <span>Sales Tax (11.99%)</span>
-                            <span>$9.90</span>
+                            <span>Sales Tax (12%)</span>
+                            <span>${tax}</span>
                         </div>
                     </div>
                     <div className="flex flex-row justify-between font-semibold text-xl">
                         <span>Total</span>
-                        <span>$122.04</span>
+                        <span>${total}</span>
                     </div>
                 </div>
                 <hr className={baseHr}/>

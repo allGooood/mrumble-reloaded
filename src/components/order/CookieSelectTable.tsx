@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import CookieSelectCard from './CookieSelectCard';
 import Button from '../Button';
@@ -24,6 +26,9 @@ function CookieSelectTable({
     product
 }: CookieSelectTableProps
 ) {
+    const {user} = useUserStore();
+    const [isLoading, setLoading] = useState(false);
+    const [options, setOptions] = useState<{ [name: string]: number }>({});
     const [cookies, setCookies] = useState<CookieOption[]>([]);
     const { refreshCart } = useCartStore();
 
@@ -41,9 +46,6 @@ function CookieSelectTable({
     }, []);
     
 
-    const {user} = useUserStore();
-    const [isLoading, setLoading] = useState(false);
-    const [options, setOptions] = useState<{ [name: string]: number }>({});
 
     const updateOptions = (name: string, count: number) => {
         setOptions(prev => {
@@ -58,17 +60,14 @@ function CookieSelectTable({
     };
 
     const addToCart = async() => {
-        // if(!user){
-        //     toast.error(TOAST_ERROR);
-        // }
+        if(!user?.id) return;
 
         const productId = JSON.stringify(product.id);
         const cartItem = {
-            "user_id" : 11, 
+            "user_id" : user?.id, 
             "product_id": productId, 
             "total_price": product.price, 
             "quantity": 1, 
-            // "options": context?.quantities,
             "options": options,
         }
 
@@ -76,7 +75,8 @@ function CookieSelectTable({
         try {
             await axios.post('http://localhost:4000/carts', cartItem);
             toast.success("Successfully added to Cart !");
-            await refreshCart();
+            await refreshCart(user.id);
+            
         } catch (error) {
             toast.error(TOAST_ERROR);
         } finally {

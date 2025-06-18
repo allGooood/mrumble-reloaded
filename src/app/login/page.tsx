@@ -3,12 +3,11 @@
 import Button from '@/components/Button';
 import React, { useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, convertUser } from "../../../firebase"
+import { auth, convertFbUser } from "../../../firebase"
 import { FirebaseError } from 'firebase/app';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import Image from 'next/image';
 import Input from '@/components/auth/Input';
 import Link from 'next/link';
 import AuthWrapper from '@/components/wrapper/AuthWrapper';
@@ -30,13 +29,14 @@ function Page() {
 
         try{
             const credentials = await signInWithEmailAndPassword(auth, email, password);
+            const fbUser = credentials.user;
 
-            const dbUser = (await axios.get(`http://localhost:4000/users/${email}`)).data.user;
-            console.log(dbUser?.id);
-            const converted = await convertUser(credentials.user, dbUser.id);
+            const getUserApi = (await axios.get(`http://localhost:4000/users/${email}`));
+            const user_id = getUserApi.data.user.id;
+            const user = await convertFbUser(fbUser, user_id);
             
-            setUser(converted);
-            console.log(converted);
+            setUser(user);
+            console.log(auth.currentUser);
 
             menuNavi.goHome();
 

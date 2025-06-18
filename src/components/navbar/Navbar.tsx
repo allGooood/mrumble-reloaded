@@ -10,7 +10,7 @@ import useCartStore from '@/app/stores/useCartStore';
 
 function Navbar() {
     const pathname = usePathname();
-    const isOrderPage = pathname.startsWith("/order");
+    const isOrderPage = pathname.startsWith("/products");
     const isCheckoutPage = pathname.startsWith("/checkout");
 
     let dynamicButton = null;

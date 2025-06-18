@@ -23,17 +23,15 @@ const app = initializeApp(firebaseConfig);
 // export const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 
-export const convertUser = async(result: User, id?:number) => {
+export const convertFbUser = async(fbUser: User, id?:number) => {
   const user =  {
       id: id,
-      uid: result.uid,
-      email: result.email,
-      username: result.displayName,
-      image: result.photoURL,
-      provider: result.providerId,
+      uid: fbUser.uid,
+      email: fbUser.email,
+      username: fbUser.displayName,
+      image: fbUser.photoURL,
+      provider: fbUser.providerId,
   };
-
-  // cookies().set("user", result.uid);
 
   return user;
 };

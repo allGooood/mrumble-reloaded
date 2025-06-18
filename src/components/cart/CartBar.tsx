@@ -7,7 +7,6 @@ import { LuCircleX } from 'react-icons/lu';
 import useUserStore from '@/app/stores/useUserStore';
 import CartBarItem from './CartBarItem';
 import useCartStore from '@/app/stores/useCartStore';
-import { useRouter } from 'next/navigation';
 import { useMenuNavigation } from '@/app/hooks/UseMenuNavigation';
 
 const CartBar = () => {
@@ -17,7 +16,9 @@ const CartBar = () => {
     const {goCheckout} = useMenuNavigation();
 
     useEffect(() => {
-        refreshCart();
+        if(!user?.id) return;
+        
+        refreshCart(user.id);
     },[user?.id, setQuantity]);
 
     useEffect(() => {
@@ -71,7 +72,7 @@ const CartBar = () => {
                         <CartBarItem key={cart.id} item={cart} onQuantityChange={refreshCart} />
                     ))} */}
                     {carts.map(cart => (
-                        <CartBarItem key={cart.id} item={cart} />
+                        <CartBarItem key={cart.id} item={cart} useQuantitySelector={true} />
                     ))}
                 </ul>
             </nav>

@@ -6,6 +6,8 @@ import Menubar from "@/components/menubar/Menubar";
 import CartBar from "@/components/cart/CartBar";
 import toast, { Toaster } from "react-hot-toast";
 import Button from "@/components/Button";
+import AuthProvider from "./provider/AuthProvider";
+import ToasterProvider from "./libs/ToasterProvider";
 
 
 export const metadata: Metadata = {
@@ -23,7 +25,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-
   return (
     <html lang="en">
       <head>
@@ -33,10 +34,13 @@ export default function RootLayout({
                       flex-col
                       items-center
                       `}>
-        <Navbar />
-        <CartBar />
-        <Menubar />
-        {children}
+        <AuthProvider>
+          <ToasterProvider />
+          <Navbar />
+          <CartBar />
+          <Menubar />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

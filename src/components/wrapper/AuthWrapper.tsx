@@ -2,7 +2,7 @@
 
 import Button from '@/components/Button';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth, convertUser } from "../../../firebase"
+import { auth, convertFbUser } from "../../../firebase"
 import React, { useEffect, useState } from 'react';
 import { FcGoogle } from "react-icons/fc";
 import { useMenuNavigation } from '@/app/hooks/UseMenuNavigation';
@@ -33,14 +33,25 @@ function AuthWrapper({
     const handleOAuth = async() => {
         try{
             const provider = new GoogleAuthProvider();
-            const result = await signInWithPopup(auth, provider);
-            const user = await convertUser(result.user);
+            const credentials = await signInWithPopup(auth, provider);
+            const fbUser = credentials.user;
+
+            const userCheckApi = await axios.get(`http://localhost:4000/users/${fbUser.email}`);
+
+            let userId;
+            if(!userCheckApi.data.user){
+                const signUpApi = await axios.post("http://localhost:4000/users"
+                                                    , await convertFbUser(fbUser));
+                userId = signUpApi.data.user.id;
+            }else{
+                userId = userCheckApi.data.user.id;
+            }
+            
+            console.log(userId);
+            
+            const user = await convertFbUser(fbUser, userId);
             setUser(user);
 
-            const res = await axios.get(`http://localhost:4000/users/${user.email}`);
-            if(!res.data.duplicated){
-                await axios.post("http://localhost:4000/users", user);
-            }
 
             menuNavi.goHome();
             

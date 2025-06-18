@@ -37,6 +37,7 @@ function Page() {
 
     // const searchParams = useSearchParams();
     // const productId = searchParams.get('productId');
+    
 
     useEffect(() => {
         axios.get('http://localhost:4000/products')

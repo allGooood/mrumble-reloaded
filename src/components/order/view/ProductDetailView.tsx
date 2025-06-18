@@ -8,6 +8,7 @@ import QuantitySelector from '@/components/QuantitySelector';
 import { Product } from '@/app/types/Product';
 import LoadingOverlay from '@/components/auth/LoadingOverlay';
 import useCartStore from '@/app/stores/useCartStore';
+import useUserStore from '@/app/stores/useUserStore';
 
 interface ProductDetailViewProps{
     product?: Product;
@@ -20,6 +21,7 @@ function ProductDetailView({product
     const [isLoading, setLoading] = useState(false);
     const [value, setValue] = useState(1);
     const { refreshCart } = useCartStore();
+    const {user} = useUserStore();
 
     const onPlus = () => {
         setValue(prev => prev + 1);
@@ -36,9 +38,11 @@ function ProductDetailView({product
             return;
         }
 
+        if(!user?.id) return;
+
         const productId = JSON.stringify(product.id);
         const cartItem = {
-            "user_id" : 11, 
+            "user_id" : user?.id, 
             "product_id": productId, 
             "total_price": value * product.price, 
             "quantity": value, 
@@ -48,7 +52,7 @@ function ProductDetailView({product
         try {
             await axios.post('http://localhost:4000/carts', cartItem);
             toast.success("Successfully added to Cart !");
-            await refreshCart();
+            await refreshCart(user.id);
         } catch (error) {
             toast.error(TOAST_ERROR);
         } finally {

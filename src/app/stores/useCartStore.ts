@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { Cart } from "../types/Cart";
 import axios from "axios";
 import toast from "react-hot-toast";
+import useUserStore from "./useUserStore";
 
 interface CartState {
     quantity: number;
@@ -13,10 +14,10 @@ interface CartState {
     carts: Cart[];
     setCarts: (data: Cart[]) => void;
 
-    refreshCart: () => Promise<void>;
+    refreshCart: (userId: number) => Promise<void>;
 }
 
-const useCartStore = create<CartState>((set, get) => ({
+const useCartStore = create<CartState>((set, get) => ({    
     quantity: 0,
     setQuantity: (count: number) => set({ quantity: get().quantity + count}),
     
@@ -25,9 +26,8 @@ const useCartStore = create<CartState>((set, get) => ({
     carts: [],
     setCarts: (data: Cart[]) => set({carts: data}),
 
-    refreshCart: async () => {
+    refreshCart: async (userId: number) => {
         try {
-            const userId = 11; // TODO: Replace with actual user ID
             const res = await axios.get(`http://localhost:4000/carts/${userId}`);
             const rows = res.data;
             set({ carts: rows });

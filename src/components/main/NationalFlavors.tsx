@@ -17,7 +17,6 @@ function NationalFlavors() {
         .then((res) => {
             const cookies = res.data;
             setCookies(cookies);
-            console.log(cookies);
         })
         .catch((error) => {
             toast.error("Something went wrong :(");

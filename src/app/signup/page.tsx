@@ -2,21 +2,22 @@
 
 import Button from '@/components/Button';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth, convertUser } from "../../../firebase"
+import { auth, convertFbUser } from "../../../firebase"
 import { FirebaseError } from 'firebase/app';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import Image from 'next/image';
 import Input from '@/components/auth/Input';
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import AuthWrapper from '@/components/wrapper/AuthWrapper';
 import { useMenuNavigation } from '../hooks/UseMenuNavigation';
 import axios from 'axios';
+import useUserStore from '../stores/useUserStore';
 
 function Page() {
     const menuNavi = useMenuNavigation();
+    const {setUser} = useUserStore();
 
     const {register, handleSubmit, formState: { errors, isSubmitting }} = useForm<FormData>({
         resolver: yupResolver(formSchema)
@@ -26,28 +27,29 @@ function Page() {
         const {name, email, password} = data;
 
         try{
-            const res = await axios.get(`http://localhost:4000/users/${email}`);
-            // if(res.data.duplicated){
-            //     alert("Email already exists"); 
-            //     return;
-            // }
-            if(!res.data.user === null){
+            const userCheckApi = await axios.get(`http://localhost:4000/users/${email}`);
+            
+            if(userCheckApi.data.user){
                 alert("Email already exists"); 
                 return;
             }
 
             const credentials = await createUserWithEmailAndPassword(auth, email, password);
-
-            await updateProfile(credentials.user, {
+            const fbUser = credentials.user;
+            await updateProfile(fbUser, {
                 displayName: name,
             });
 
-            const user = await convertUser(credentials.user);
-            const apiResult = await axios.post("http://localhost:4000/users", user);
-            console.log(apiResult.data);
+            //TODO : userId추가하기
+            const signUpApi = await axios.post("http://localhost:4000/users"
+                                                , await convertFbUser(fbUser));
+            const userId = signUpApi.data.user.id;
+
+            const user = await convertFbUser(fbUser, userId);
+            setUser(user);
+            console.log(userId);
 
             alert("회원 가입이 완료 되었습니다!");
-
             menuNavi.goHome();
 
         }catch(error){

@@ -6,16 +6,19 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { TOAST_ERROR } from '@/app/utils/constants';
 import useCartStore from '@/app/stores/useCartStore';
-import { usePathname } from 'next/navigation';
+import useUserStore from '@/app/stores/useUserStore';
 
 interface CartBarItemProps {
     item: Cart;
+    useQuantitySelector?: boolean;
 }
 
-const CartBarItem = ({item}:CartBarItemProps) => {
-    const pathname = usePathname();
-    const isCheckoutPage = pathname.startsWith("/checkout");
+const CartBarItem = ({
+    item, 
+    useQuantitySelector = false
+}:CartBarItemProps) => {
     const {refreshCart} = useCartStore();
+    const {user} = useUserStore();
 
     const printOptions = (options: string | null): JSX.Element[] | null => {
         if (!options) return null;
@@ -34,6 +37,8 @@ const CartBarItem = ({item}:CartBarItemProps) => {
 
     const handleQuantityChange = async(newQty: number) => {
         if(newQty < 1) return;
+        if(!user?.id) return;
+
         setEachQuantity(newQty);
         try{
             await axios.put("http://localhost:4000/carts", {
@@ -44,7 +49,7 @@ const CartBarItem = ({item}:CartBarItemProps) => {
                 options: item.product.options,
             });
 
-            await refreshCart();
+            await refreshCart(user.id);
 
         }catch (error) {
             console.error(error);
@@ -57,7 +62,7 @@ const CartBarItem = ({item}:CartBarItemProps) => {
 
   return (
     <>
-        <li className="flex flex-row border-b border-gray-300 pb-[15px] last:border-b-0">
+        <li className="flex flex-row pb-[15px] last:border-b-0">
             <div className="relative bg-[#FFB9CD] overflow-hidden w-[90px] h-[90px] rounded-lg shrink-0">
                 <Image className="object-cover" alt="cartItem" src={`/order/${item.product.image_url}`} fill />
             </div>
@@ -68,7 +73,7 @@ const CartBarItem = ({item}:CartBarItemProps) => {
                         <p className="text-sm font-normal">${item.total_price}</p>
                     </div>
 
-                    {isCheckoutPage ? 
+                    {!useQuantitySelector ? 
                         (<div className="text-lg font-medium pr-[10px]">
                             <span>Qty: {eachQuantity}</span>
                         </div>) : 

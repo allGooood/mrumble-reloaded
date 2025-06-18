@@ -11,6 +11,7 @@ import ToasterProvider from '../libs/ToasterProvider';
 import toast from 'react-hot-toast';
 import { TOAST_ERROR } from '../utils/constants';
 import { useMenuNavigation } from '../hooks/UseMenuNavigation';
+import useUserStore from '../stores/useUserStore';
 
 
 
@@ -28,6 +29,7 @@ const Page = () => {
     const [isLoading, setLoading] = useState(false);
     const {goHome} = useMenuNavigation();
     const [note, setNote] = useState("");
+    const {user} = useUserStore();
 
     const MAX_LENGTH = 150;
     const [textLength, setTextLength] = useState(MAX_LENGTH);
@@ -52,8 +54,6 @@ const Page = () => {
     const placeOrder = async() => {
         setLoading(true);
 
-        const userId = 11;
-
         try{
             const items = carts.map(item => ({
                 id: item.product.id,
@@ -65,7 +65,7 @@ const Page = () => {
             const cart_ids = carts.map(item => item.id);
 
             const order = {
-                user_id: userId,
+                user_id: user?.id,
                 tax: tax,
                 subtotal: subtotal,
                 total: total,
